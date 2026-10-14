@@ -1,6 +1,3 @@
-from sklearn.feature_extraction.text import TfidfVectorizer
-from sklearn.linear_model import LogisticRegression
-from sklearn.pipeline import make_pipeline
 import json
 import re
 
@@ -106,23 +103,21 @@ class FakeNewsModel:
         ]
         self.model = None
         self.verifier = ChannelVerifier()
-        self.train_model()
-        
-        # Load spaCy for NER extraction
-        import spacy
-        try:
-            self.nlp = spacy.load("en_core_web_sm")
-        except:
-            self.nlp = None
+        self.nlp = None
 
     def train_model(self):
-        print("Training demo Fake News ML model...")
-        texts = [item[0] for item in self.dataset]
-        labels = [item[1] for item in self.dataset] # 1 = Fake, 0 = Real
-
-        self.model = make_pipeline(TfidfVectorizer(), LogisticRegression())
-        self.model.fit(texts, labels)
-        print("Model training complete.")
+        try:
+            from sklearn.feature_extraction.text import TfidfVectorizer
+            from sklearn.linear_model import LogisticRegression
+            from sklearn.pipeline import make_pipeline
+            texts = [item[0] for item in self.dataset]
+            labels = [item[1] for item in self.dataset] # 1 = Fake, 0 = Real
+            self.model = make_pipeline(TfidfVectorizer(), LogisticRegression())
+            self.model.fit(texts, labels)
+            print("Model training complete.")
+        except Exception as e:
+            print(f"ML training note: {e}")
+            self.model = None
         
     def extract_keywords(self, text):
         import string
@@ -137,15 +132,25 @@ class FakeNewsModel:
 
     def predict(self, text, channel_url=None):
         if not self.model:
-            return {"prediction": "Error", "confidence": 0.0, "fact_check_info": "Model not loaded", "source_verification": {}}
+            self.train_model()
             
         # --- ROBUST CLAIM & ENTITY EXTRACTION ---
         query = ""
-        if self.nlp:
-            doc = self.nlp(text)
-            ents = [ent.text for ent in doc.ents if ent.label_ in {"ORG", "GPE", "PERSON", "EVENT"}]
-            if len(ents) >= 2:
-                query = " ".join(ents)
+        if self.nlp is None:
+            try:
+                import spacy
+                self.nlp = spacy.load("en_core_web_sm")
+            except Exception:
+                self.nlp = False
+
+        if self.nlp and self.nlp is not False:
+            try:
+                doc = self.nlp(text)
+                ents = [ent.text for ent in doc.ents if ent.label_ in {"ORG", "GPE", "PERSON", "EVENT"}]
+                if len(ents) >= 2:
+                    query = " ".join(ents)
+            except Exception:
+                pass
         
         if not query:
             query = self.extract_keywords(text)
