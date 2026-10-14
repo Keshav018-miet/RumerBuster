@@ -1,6 +1,6 @@
 # RumorBuster - Digital Content Verification & Forensic Analysis System
 
-RumorBuster is a student-level cybersecurity and digital forensics web application. It is designed to analyze suspicious news, images, and videos to verify their authenticity and integrity.
+RumorBuster is a digital forensics and rumor verification web application. It is designed to analyze suspicious news, claims, images, and videos to verify their authenticity and integrity.
 
 ## Features
 - **News Analysis:** Uses TF-IDF and Logistic Regression to analyze text for misinformation.

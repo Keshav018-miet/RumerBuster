@@ -37,8 +37,33 @@
         {% block content %}{% endblock %}
     </div>
 
-    <footer>
-        <p>&copy; 2026 RumorBuster - Student Cybersecurity Project</p>
+    <footer class="app-footer">
+        <div class="footer-container">
+            <div class="footer-info-grid">
+                <div class="footer-info-col">
+                    <h4>🔍 How RumorBuster Helps in Rumor Finding</h4>
+                    <p>
+                        RumorBuster helps you combat misinformation and verify rumors through intelligent multi-source analysis. When you submit a suspicious claim or headline, the system extracts critical entities, queries real-time verified news networks and live web indexes, and uses generative AI to analyze context, determine factual consensus, and provide transparent truth ratings with credible sources.
+                    </p>
+                </div>
+                <div class="footer-info-col status-col">
+                    <h4>⚡ Operational Capabilities & Status</h4>
+                    <div class="status-indicator-box">
+                        <p class="status-line">
+                            <span class="status-badge-live">🟢 Fully Operational</span>
+                            <strong>News Analysis</strong> (NLP / Machine Learning) and <strong>Live Web Fact-Checker</strong> (Real-time AI RAG Search) are active and working properly.
+                        </p>
+                        <p class="status-line status-dev">
+                            <span class="status-badge-dev">🟡 In Development</span>
+                            All remaining modules (Image Analysis, Video Deepfake Detection, and File Integrity) are currently in the development phase.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom-bar">
+                <p>&copy; 2026 RumorBuster. Dedicated to digital content verification and media integrity.</p>
+            </div>
+        </div>
     </footer>
 
     <script src="{{ url_for('static', filename='js/main.js') }}"></script>
