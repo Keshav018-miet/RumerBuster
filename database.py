@@ -1,12 +1,19 @@
 import sqlite3
 import os
+import shutil
 from datetime import datetime
 from werkzeug.security import generate_password_hash, check_password_hash
 
 if os.environ.get('VERCEL'):
-    DB_FILE = os.path.join('/tmp', 'truthscan.db')
+    DB_FILE = os.path.join('/tmp', 'rumorbuster.db')
 else:
-    DB_FILE = os.path.join(os.path.dirname(__file__), 'truthscan.db')
+    DB_FILE = os.path.join(os.path.dirname(__file__), 'rumorbuster.db')
+    old_db = os.path.join(os.path.dirname(__file__), 'truthscan.db')
+    if os.path.exists(old_db) and not os.path.exists(DB_FILE):
+        try:
+            shutil.copy2(old_db, DB_FILE)
+        except Exception:
+            pass
 
 def get_db_connection():
     conn = sqlite3.connect(DB_FILE)
@@ -50,7 +57,7 @@ def init_db():
     if not admin_user:
         hashed_pw = generate_password_hash('admin123')
         c.execute('INSERT INTO users (username, email, password_hash) VALUES (?, ?, ?)',
-                  ('admin', 'admin@truthscan.local', hashed_pw))
+                  ('admin', 'admin@rumorbuster.local', hashed_pw))
         conn.commit()
 
     conn.close()

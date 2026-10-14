@@ -11,4 +11,8 @@ venv.bak/
 uploads/*
 !uploads/.gitkeep
 truthscan.db
+rumorbuster.db
+*.db
+cloudflared*.exe
+andrej-karpathy-skills-main/
 .DS_Store

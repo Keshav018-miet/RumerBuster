@@ -1,4 +1,4 @@
-# TruthScan Antigravity Workspace Rules
+# RumorBuster Antigravity Workspace Rules
 
 ## Always-Active Server & Live Tunnel Policy
 Whenever a session starts, resumes, or whenever the background tasks are detected as stopped/restarted:

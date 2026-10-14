@@ -12,4 +12,6 @@ html = markdown.markdown(text)
 pdf = PDF()
 pdf.add_page()
 pdf.write_html(html)
+pdf.output('RumorBuster_Project_Report.pdf')
 pdf.output('TruthScan_Project_Report.pdf')
+

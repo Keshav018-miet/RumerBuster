@@ -20,7 +20,7 @@ from ml_model import nlp_model
 from live_search import fact_check_claim
 
 app = Flask(__name__)
-app.secret_key = "truthscan_secret_key_student_project"
+app.secret_key = "rumorbuster_secret_key_student_project"
 
 if os.environ.get('VERCEL'):
     UPLOAD_FOLDER = os.path.join('/tmp', 'uploads')

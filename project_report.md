@@ -1,7 +1,7 @@
-# TruthScan Comprehensive Project Report
+# RumorBuster Comprehensive Project Report
 
 ## 1. Project Overview
-TruthScan is a digital content verification and forensic analysis platform engineered in Python (Flask). The platform empowers investigators, journalists, and everyday users to detect fake news, uncover manipulated media (deepfakes), analyze file integrity, and cross-reference real-time news across multiple global and national sources using Retrieval-Augmented Generation (RAG) and automated machine learning.
+RumorBuster is a digital content verification and forensic analysis platform engineered in Python (Flask). The platform empowers investigators, journalists, and everyday users to detect fake news, uncover manipulated media (deepfakes), analyze file integrity, and cross-reference real-time news across multiple global and national sources using Retrieval-Augmented Generation (RAG) and automated machine learning.
 
 ---
 
@@ -99,4 +99,4 @@ User Claim / Media Input
 ---
 
 ## 5. Conclusion & Next Steps
-TruthScan has evolved into an end-to-end, production-ready digital forensic suite. By marrying real-time multi-source news aggregation, intelligent offline machine learning, generative AI fact-checking, and responsive mobile-first design, TruthScan delivers transparent, auditable verification for digital content.
+RumorBuster has evolved into an end-to-end, production-ready digital forensic suite. By marrying real-time multi-source news aggregation, intelligent offline machine learning, generative AI fact-checking, and responsive mobile-first design, RumorBuster delivers transparent, auditable verification for digital content.

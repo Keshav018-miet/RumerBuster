@@ -1,6 +1,6 @@
-# TruthScan - Digital Content Verification & Forensic Analysis System
+# RumorBuster - Digital Content Verification & Forensic Analysis System
 
-TruthScan is a student-level cybersecurity and digital forensics web application. It is designed to analyze suspicious news, images, and videos to verify their authenticity and integrity.
+RumorBuster is a student-level cybersecurity and digital forensics web application. It is designed to analyze suspicious news, images, and videos to verify their authenticity and integrity.
 
 ## Features
 - **News Analysis:** Uses TF-IDF and Logistic Regression to analyze text for misinformation.

@@ -1,12 +1,12 @@
 @echo off
-title TruthScan Server & Cloudflare Tunnel
+title RumorBuster Server & Cloudflare Tunnel
 echo ========================================================
-echo Starting TruthScan Flask Server and Cloudflare Tunnel...
+echo Starting RumorBuster Flask Server and Cloudflare Tunnel...
 echo ========================================================
 cd /d "%~dp0"
 
 echo [1/2] Starting Flask Backend...
-start "TruthScan Flask Backend" cmd /k "python app.py"
+start "RumorBuster Flask Backend" cmd /k "python app.py"
 
 timeout /t 3 /nobreak >nul
 
