@@ -19,7 +19,22 @@ from utils import get_sha256, get_perceptual_hash, extract_exif, analyze_video_f
 from ml_model import nlp_model
 from live_search import fact_check_claim
 
-app = Flask(__name__)
+basedir = os.path.abspath(os.path.dirname(__file__))
+possible_template_dirs = [
+    os.path.join(basedir, 'templates'),
+    os.path.join(basedir, 'api', 'templates'),
+    os.path.join(os.getcwd(), 'templates')
+]
+template_dir = next((d for d in possible_template_dirs if os.path.exists(d)), os.path.join(basedir, 'templates'))
+
+possible_static_dirs = [
+    os.path.join(basedir, 'static'),
+    os.path.join(basedir, 'api', 'static'),
+    os.path.join(os.getcwd(), 'static')
+]
+static_dir = next((d for d in possible_static_dirs if os.path.exists(d)), os.path.join(basedir, 'static'))
+
+app = Flask(__name__, template_folder=template_dir, static_folder=static_dir)
 app.secret_key = "rumorbuster_secret_key_app"
 
 if os.environ.get('VERCEL'):
@@ -29,9 +44,26 @@ else:
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.config['MAX_CONTENT_LENGTH'] = 50 * 1024 * 1024 # 50 MB max
 
-# Ensure upload folder exists and database initialized
-os.makedirs(UPLOAD_FOLDER, exist_ok=True)
-init_db()
+# Ensure upload folder exists and database initialized safely
+try:
+    os.makedirs(UPLOAD_FOLDER, exist_ok=True)
+except Exception as e:
+    print(f"Upload directory setup note: {e}")
+
+try:
+    init_db()
+except Exception as e:
+    print(f"Database setup note: {e}")
+
+@app.route('/health')
+def health():
+    return {
+        "status": "healthy",
+        "app": "RumorBuster",
+        "environment": "Vercel" if os.environ.get('VERCEL') else "Local",
+        "template_folder": app.template_folder,
+        "template_found": os.path.exists(app.template_folder)
+    }
 
 ALLOWED_EXTENSIONS_IMAGE = {'png', 'jpg', 'jpeg'}
 ALLOWED_EXTENSIONS_VIDEO = {'mp4', 'avi', 'mov'}

@@ -1,26 +1,44 @@
 import os
-import spacy
 import requests
 from bs4 import BeautifulSoup
-from serpapi import GoogleSearch
-from google import genai
-from google.genai import types
 from dotenv import load_dotenv
+
+# Optional spaCy NER model
+try:
+    import spacy
+    try:
+        nlp = spacy.load("en_core_web_sm")
+    except Exception:
+        nlp = None
+except ImportError:
+    nlp = None
+
+# Optional SerpAPI
+try:
+    from serpapi import GoogleSearch
+except ImportError:
+    GoogleSearch = None
+
+# Optional Google GenAI SDK
+try:
+    from google import genai
+    from google.genai import types
+except ImportError:
+    genai = None
+    types = None
 
 # Load environment variables
 load_dotenv()
 
-# Initialize models and clients
-try:
-    nlp = spacy.load("en_core_web_sm")
-except OSError:
-    nlp = None
-
 GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
 SERPAPI_API_KEY = os.getenv("SERPAPI_API_KEY")
 
-if GEMINI_API_KEY and GEMINI_API_KEY != "your_gemini_api_key_here":
-    ai_client = genai.Client(api_key=GEMINI_API_KEY)
+if GEMINI_API_KEY and GEMINI_API_KEY != "your_gemini_api_key_here" and genai:
+    try:
+        ai_client = genai.Client(api_key=GEMINI_API_KEY)
+    except Exception as e:
+        print(f"Failed to create genai client: {e}")
+        ai_client = None
 else:
     ai_client = None
 

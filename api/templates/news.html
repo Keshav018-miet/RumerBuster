@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>News Analysis Module</h2>
+<p class="card-desc">Use NLP (TF-IDF) and Logistic Regression to predict if a news article is potentially fake.</p>
+
+<div class="card" style="margin-top: 1rem;">
+    <form method="POST" action="{{ url_for('news_analysis') }}">
+        <div class="form-group">
+            <label for="headline">Article Headline (Optional)</label>
+            <input type="text" id="headline" name="headline" class="form-control" placeholder="e.g. Breaking: New study reveals...">
+        </div>
+
+        <div class="form-group">
+            <label for="channel_url">Source / Channel Link or Handle (Optional)</label>
+            <input type="text" id="channel_url" name="channel_url" class="form-control" placeholder="e.g. https://t.me/DSquadOfficial, https://www.instagram.com/defencesquad/, https://m.youtube.com/c/DefenceSquad">
+            <small style="color: var(--text-secondary); display: block; margin-top: 0.25rem;">
+                💡 Enter channel links (e.g. Defence Squad YouTube, Telegram, Instagram, Twitter) or official news domains to verify source credibility.
+            </small>
+        </div>
+        
+        <div class="form-group">
+            <label for="news_text">Full News Text / Content (Required)</label>
+            <textarea id="news_text" name="news_text" class="form-control" required placeholder="Paste the full text of the article here for analysis..."></textarea>
+        </div>
+        
+        <button type="submit" class="btn">Analyze News</button>
+    </form>
+</div>
+{% endblock %}

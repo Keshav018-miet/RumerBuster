@@ -11,5 +11,8 @@ requests
 feedparser
 beautifulsoup4
 google-genai
+pygooglenews
+newsapi-python
+google-search-results
 markdown
 fpdf2

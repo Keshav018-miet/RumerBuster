@@ -7,10 +7,22 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 from dotenv import load_dotenv
 
 # Third-party SDKs
-from pygooglenews import GoogleNews
-from newsapi import NewsApiClient
-from google import genai
-from google.genai import types
+try:
+    from pygooglenews import GoogleNews
+except Exception:
+    GoogleNews = None
+
+try:
+    from newsapi import NewsApiClient
+except Exception:
+    NewsApiClient = None
+
+try:
+    from google import genai
+    from google.genai import types
+except Exception:
+    genai = None
+    types = None
 
 # Load environment variables securely
 load_dotenv()
@@ -21,14 +33,14 @@ GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
 
 # Initialize Clients
 try:
-    newsapi_client = NewsApiClient(api_key=NEWSAPI_KEY) if NEWSAPI_KEY else None
+    newsapi_client = NewsApiClient(api_key=NEWSAPI_KEY) if (NEWSAPI_KEY and NewsApiClient) else None
 except Exception as e:
     print(f"Failed to initialize NewsAPI: {e}")
     newsapi_client = None
 
 try:
     # Use modern google-genai SDK
-    if GEMINI_API_KEY and GEMINI_API_KEY != "your_gemini_api_key_here":
+    if GEMINI_API_KEY and GEMINI_API_KEY != "your_gemini_api_key_here" and genai:
         ai_client = genai.Client(api_key=GEMINI_API_KEY)
     else:
         ai_client = None

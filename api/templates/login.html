@@ -1,0 +1,172 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="auth-split-wrapper">
+    <!-- Visual Showcase Carousel (Left Column) -->
+    <div class="auth-visual-showcase" id="authCarousel">
+        <div class="carousel-container">
+            <!-- Slide 1: Propaganda & Manipulation Editorial Collage -->
+            <div class="carousel-slide active" data-slide="0">
+                <div class="slide-image-wrapper">
+                    <img src="{{ url_for('static', filename='img/propaganda_collage.png') }}" 
+                         alt="Digital media censorship, propaganda, and fake news surreal collage" 
+                         loading="eager" class="slide-img collage-fit">
+                    <div class="slide-overlay-gradient"></div>
+                </div>
+                <div class="slide-caption">
+                    <span class="slide-badge">⚡ FORENSIC INTELLIGENCE</span>
+                    <h3>Detect Digital Manipulation</h3>
+                    <p>Unmask altered media, coordinated propaganda, and fabricated narratives with multi-source AI verification.</p>
+                </div>
+            </div>
+
+            <!-- Slide 2: Real-World Research & Statistics -->
+            <div class="carousel-slide" data-slide="1">
+                <div class="slide-image-wrapper">
+                    <img src="{{ url_for('static', filename='img/misinfo_impact.png') }}" 
+                         alt="Infographic showing fake news and election deepfake statistics in India" 
+                         loading="lazy" class="slide-img contain-fit">
+                    <div class="slide-overlay-gradient"></div>
+                </div>
+                <div class="slide-caption">
+                    <span class="slide-badge">📊 RESEARCH DATA</span>
+                    <h3>The Rising Threat of Deepfakes</h3>
+                    <p>Over 75% of online voters encounter AI-generated deepfakes. RumorBuster delivers instant fact verification.</p>
+                </div>
+            </div>
+
+            <!-- Slide 3: Viral Information Network -->
+            <div class="carousel-slide" data-slide="2">
+                <div class="slide-image-wrapper">
+                    <img src="{{ url_for('static', filename='img/rumor_network.png') }}" 
+                         alt="Connected wooden figurines representing viral social networks and information sharing" 
+                         loading="lazy" class="slide-img">
+                    <div class="slide-overlay-gradient"></div>
+                </div>
+                <div class="slide-caption">
+                    <span class="slide-badge">🌐 VIRAL DEFENSE</span>
+                    <h3>Break The Chain of Misinformation</h3>
+                    <p>Stop unverified claims in their tracks. Verify files, videos, and articles before sharing.</p>
+                </div>
+            </div>
+
+            <!-- Carousel Slide Indicators -->
+            <div class="carousel-indicators">
+                <button type="button" class="indicator-dot active" aria-label="Go to Slide 1" onclick="setSlide(0)"></button>
+                <button type="button" class="indicator-dot" aria-label="Go to Slide 2" onclick="setSlide(1)"></button>
+                <button type="button" class="indicator-dot" aria-label="Go to Slide 3" onclick="setSlide(2)"></button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Login Authentication Card (Right Column) -->
+    <div class="auth-form-column">
+        <div class="auth-card">
+            <div class="auth-card-header">
+                <div class="brand-pill">🛡️ SECURE VERIFICATION PORTAL</div>
+                <h2>RumorBuster Login</h2>
+                <p class="card-desc">Sign in to access forensic analysis, deepfake inspection, and real-time fact-checking tools.</p>
+            </div>
+
+            <form method="POST" action="{{ url_for('login') }}">
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <div class="input-with-icon">
+                        <span class="input-icon">👤</span>
+                        <input type="text" id="username" name="username" class="form-control" required placeholder="Enter your username" autocomplete="username">
+                    </div>
+                </div>
+
+                <div class="form-group" style="margin-top: 1rem;">
+                    <label for="password">Password</label>
+                    <div class="input-with-icon">
+                        <span class="input-icon">🔒</span>
+                        <input type="password" id="password" name="password" class="form-control" required placeholder="Enter your password" autocomplete="current-password">
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-auth-submit">
+                    <span>Sign In to Dashboard</span>
+                    <span style="font-size: 1.1rem; line-height: 1;">→</span>
+                </button>
+            </form>
+
+            <div class="demo-credentials-box">
+                <div class="demo-badge">⚡ Quick Demo Credentials</div>
+                <div class="demo-creds-row">
+                    <span>Username: <strong>admin</strong></span>
+                    <span>Password: <strong>admin123</strong></span>
+                </div>
+                <button type="button" class="btn-fill-demo" onclick="fillDemoCreds()">✨ Auto-fill Demo Login</button>
+            </div>
+
+            <div class="auth-footer-prompt">
+                <p>Don't have an account yet? <a href="{{ url_for('register') }}">Create an account</a></p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    let currentSlide = 0;
+    const slides = document.querySelectorAll('.carousel-slide');
+    const dots = document.querySelectorAll('.indicator-dot');
+    let autoPlayTimer = null;
+
+    function setSlide(index) {
+        if (!slides.length) return;
+        currentSlide = (index + slides.length) % slides.length;
+        
+        slides.forEach((slide, i) => {
+            slide.classList.toggle('active', i === currentSlide);
+        });
+
+        dots.forEach((dot, i) => {
+            dot.classList.toggle('active', i === currentSlide);
+        });
+
+        resetAutoPlay();
+    }
+
+    function nextSlide() {
+        setSlide(currentSlide + 1);
+    }
+
+    function startAutoPlay() {
+        stopAutoPlay();
+        autoPlayTimer = setInterval(nextSlide, 5000);
+    }
+
+    function stopAutoPlay() {
+        if (autoPlayTimer) {
+            clearInterval(autoPlayTimer);
+            autoPlayTimer = null;
+        }
+    }
+
+    function resetAutoPlay() {
+        stopAutoPlay();
+        startAutoPlay();
+    }
+
+    function fillDemoCreds() {
+        const uInput = document.getElementById('username');
+        const pInput = document.getElementById('password');
+        if (uInput && pInput) {
+            uInput.value = 'admin';
+            pInput.value = 'admin123';
+            uInput.focus();
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        startAutoPlay();
+
+        const carousel = document.getElementById('authCarousel');
+        if (carousel) {
+            carousel.addEventListener('mouseenter', stopAutoPlay);
+            carousel.addEventListener('mouseleave', startAutoPlay);
+        }
+    });
+</script>
+{% endblock %}
