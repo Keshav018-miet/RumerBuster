@@ -1,6 +1,9 @@
 import hashlib
 import os
-import cv2
+try:
+    import cv2
+except ImportError:
+    cv2 = None
 import imagehash
 from PIL import Image
 from PIL.ExifTags import TAGS
@@ -49,6 +52,8 @@ def analyze_video_frames(filepath, num_frames=5):
     Extracts a few frames from the video to simulate analysis.
     Returns basic video info.
     """
+    if cv2 is None:
+        return {"error": "OpenCV is unavailable in this environment.", "frame_count": 0, "fps": 0, "resolution": "N/A", "duration_seconds": 0, "frames_analyzed": 0}
     cap = cv2.VideoCapture(filepath)
     if not cap.isOpened():
         return {"error": "Could not open video file."}

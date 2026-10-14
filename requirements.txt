@@ -11,6 +11,5 @@ requests
 feedparser
 beautifulsoup4
 google-genai
-spacy
 markdown
 fpdf2

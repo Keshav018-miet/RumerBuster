@@ -126,7 +126,10 @@ class FakeNewsModel:
         
     def extract_keywords(self, text):
         import string
-        from spacy.lang.en.stop_words import STOP_WORDS
+        try:
+            from spacy.lang.en.stop_words import STOP_WORDS
+        except Exception:
+            STOP_WORDS = {"a", "an", "the", "in", "on", "at", "to", "for", "of", "with", "is", "are", "was", "were", "and", "or", "by", "from", "as", "about", "that", "this"}
         text_clean = text.translate(str.maketrans("", "", string.punctuation))
         tokens = [t.lower() for t in text_clean.split() if t.lower() not in STOP_WORDS]
         fallback = " ".join(tokens)
