@@ -41,19 +41,31 @@ basedir = os.path.abspath(os.path.dirname(__file__))
 possible_template_dirs = [
     os.path.join(basedir, 'templates'),
     os.path.join(basedir, 'api', 'templates'),
-    os.path.join(os.getcwd(), 'templates')
+    os.path.join(os.getcwd(), 'templates'),
+    os.path.join(os.getcwd(), 'api', 'templates')
 ]
 template_dir = next((d for d in possible_template_dirs if os.path.exists(d)), os.path.join(basedir, 'templates'))
 
 possible_static_dirs = [
     os.path.join(basedir, 'static'),
+    os.path.join(basedir, 'public', 'static'),
     os.path.join(basedir, 'api', 'static'),
-    os.path.join(os.getcwd(), 'static')
+    os.path.join(os.getcwd(), 'static'),
+    os.path.join(os.getcwd(), 'public', 'static'),
+    os.path.join(os.getcwd(), 'api', 'static')
 ]
 static_dir = next((d for d in possible_static_dirs if os.path.exists(d)), os.path.join(basedir, 'static'))
 
 app = Flask(__name__, template_folder=template_dir, static_folder=static_dir)
 app.secret_key = "rumorbuster_secret_key_app"
+
+@app.route('/static/<path:filename>', endpoint='custom_static_serve')
+def custom_static_serve(filename):
+    for s_dir in possible_static_dirs:
+        target = os.path.join(s_dir, filename)
+        if os.path.exists(target):
+            return send_from_directory(s_dir, filename)
+    return "Static asset not found", 404
 
 if os.environ.get('VERCEL'):
     UPLOAD_FOLDER = os.path.join('/tmp', 'uploads')
@@ -80,7 +92,10 @@ def health():
         "app": "RumorBuster",
         "environment": "Vercel" if os.environ.get('VERCEL') else "Local",
         "template_folder": app.template_folder,
-        "template_found": os.path.exists(app.template_folder)
+        "template_found": os.path.exists(app.template_folder),
+        "static_folder": app.static_folder,
+        "static_found": os.path.exists(app.static_folder) if app.static_folder else False,
+        "css_found": os.path.exists(os.path.join(app.static_folder, 'css', 'style.css')) if app.static_folder else False
     }
 
 ALLOWED_EXTENSIONS_IMAGE = {'png', 'jpg', 'jpeg'}
