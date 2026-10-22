@@ -1,72 +1,72 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 1.5rem; flex-wrap: wrap; gap: 1rem;">
+<div class="dashboard-header-section">
     <div>
-        <h2>Forensic Analysis Modules</h2>
-        <p class="card-desc" style="margin-bottom: 0;">Select an active module to begin verifying news, claims, or rumors.</p>
+        <h2 class="dashboard-heading">Forensic Analysis Modules</h2>
+        <p class="dashboard-subheading">Select a module to begin verifying news, claims, digital media, or rumors.</p>
     </div>
 </div>
 
 <div class="dashboard-grid">
-    <div class="card" onclick="window.location='{{ url_for('news_analysis') }}'" style="cursor:pointer; border-top: 4px solid var(--success);">
-        <div class="card-header-badge-row">
-            <div class="card-icon" style="margin-bottom:0;">📰</div>
-            <span class="card-status-pill-active">🟢 Active</span>
-        </div>
-        <h3 class="card-title">News Analysis</h3>
-        <p class="card-desc">Analyze news articles and text statements using NLP and Machine Learning to classify potential misinformation.</p>
-        <button class="btn" style="background-color: var(--success); color: white;">Launch Classifier</button>
+    <!-- News Analysis -->
+    <div class="module-card" onclick="window.location='{{ url_for('news_analysis') }}'">
+        <div class="module-card-icon">📰</div>
+        <h3 class="module-card-title">News Analysis</h3>
+        <p class="module-card-desc">Analyze news articles and text statements using NLP and Machine Learning to classify potential misinformation.</p>
+        <button class="btn-module" onclick="event.stopPropagation(); window.location='{{ url_for('news_analysis') }}'">
+            Launch Classifier
+        </button>
     </div>
 
-    <div class="card" onclick="window.location='{{ url_for('live_fact_check_ui') }}'" style="cursor:pointer; border-top: 4px solid var(--accent); border-color: var(--accent);">
-        <div class="card-header-badge-row">
-            <div class="card-icon" style="margin-bottom:0;">🌐</div>
-            <span class="card-status-pill-active">🟢 Active</span>
-        </div>
-        <h3 class="card-title">Live Web Search (RAG)</h3>
-        <p class="card-desc">Instantly cross-check breaking news and viral claims against real-time verified web sources using Gemini AI.</p>
-        <button class="btn" style="background-color: var(--accent);">Live Search</button>
+    <!-- Live Web Search (RAG) -->
+    <div class="module-card" onclick="window.location='{{ url_for('live_fact_check_ui') }}'">
+        <div class="module-card-icon">🌐</div>
+        <h3 class="module-card-title">Live Web Search (RAG)</h3>
+        <p class="module-card-desc">Instantly cross-check breaking news and viral claims against real-time verified web sources using Gemini AI.</p>
+        <button class="btn-module" onclick="event.stopPropagation(); window.location='{{ url_for('live_fact_check_ui') }}'">
+            Live Search
+        </button>
     </div>
 
-    <div class="card" onclick="window.location='{{ url_for('image_analysis') }}'" style="cursor:pointer; opacity: 0.9;">
-        <div class="card-header-badge-row">
-            <div class="card-icon" style="margin-bottom:0;">🖼️</div>
-            <span class="card-status-pill-dev">🟡 In Development</span>
-        </div>
-        <h3 class="card-title">Image Analysis</h3>
-        <p class="card-desc">Analyze images for manipulation, verify EXIF metadata, and generate perceptual hashes (heuristic mode).</p>
-        <button class="btn btn-secondary">Explore (Beta)</button>
+    <!-- Image Analysis -->
+    <div class="module-card" onclick="window.location='{{ url_for('image_analysis') }}'">
+        <div class="module-card-icon">🖼️</div>
+        <h3 class="module-card-title">Image Analysis</h3>
+        <p class="module-card-desc">Analyze images for manipulation, verify EXIF metadata, and detect deepfake artifacts with neural forensics.</p>
+        <button class="btn-module" onclick="event.stopPropagation(); window.location='{{ url_for('image_analysis') }}'">
+            Analyze Image
+        </button>
     </div>
 
-    <div class="card" onclick="window.location='{{ url_for('video_analysis') }}'" style="cursor:pointer; opacity: 0.9;">
-        <div class="card-header-badge-row">
-            <div class="card-icon" style="margin-bottom:0;">🎬</div>
-            <span class="card-status-pill-dev">🟡 In Development</span>
-        </div>
-        <h3 class="card-title">Video Analysis</h3>
-        <p class="card-desc">Analyze video frames for deepfake characteristics and verify structural integrity (heuristic mode).</p>
-        <button class="btn btn-secondary">Explore (Beta)</button>
+    <!-- Video Analysis -->
+    <div class="module-card" onclick="window.location='{{ url_for('video_analysis') }}'">
+        <div class="module-card-icon">🎬</div>
+        <h3 class="module-card-title">Video Analysis</h3>
+        <p class="module-card-desc">Analyze video frames for deepfake characteristics and verify temporal consistency and structural integrity.</p>
+        <button class="btn-module" onclick="event.stopPropagation(); window.location='{{ url_for('video_analysis') }}'">
+            Analyze Video
+        </button>
     </div>
 
-    <div class="card" onclick="window.location='{{ url_for('file_integrity') }}'" style="cursor:pointer; opacity: 0.9;">
-        <div class="card-header-badge-row">
-            <div class="card-icon" style="margin-bottom:0;">🔒</div>
-            <span class="card-status-pill-dev">🟡 In Development</span>
-        </div>
-        <h3 class="card-title">File Integrity</h3>
-        <p class="card-desc">Generate and compare SHA-256 hashes of files to verify original contents are unchanged.</p>
-        <button class="btn btn-secondary">Explore (Beta)</button>
+    <!-- File Integrity -->
+    <div class="module-card" onclick="window.location='{{ url_for('file_integrity') }}'">
+        <div class="module-card-icon">🔒</div>
+        <h3 class="module-card-title">File Integrity</h3>
+        <p class="module-card-desc">Generate and compare SHA-256 and perceptual hashes of files to verify original contents remain unaltered.</p>
+        <button class="btn-module" onclick="event.stopPropagation(); window.location='{{ url_for('file_integrity') }}'">
+            Verify Integrity
+        </button>
     </div>
     
-    <div class="card" onclick="window.location='{{ url_for('history') }}'" style="cursor:pointer;">
-        <div class="card-header-badge-row">
-            <div class="card-icon" style="margin-bottom:0;">🗄️</div>
-            <span class="card-status-pill-active" style="background: rgba(59, 78, 104, 0.1); color: var(--accent); border-color: rgba(59, 78, 104, 0.2);">Logs</span>
-        </div>
-        <h3 class="card-title">Forensic History</h3>
-        <p class="card-desc">View the chain of custody and verifiable records for all previously analyzed files and claims.</p>
-        <button class="btn btn-secondary">View Records</button>
+    <!-- Forensic History -->
+    <div class="module-card" onclick="window.location='{{ url_for('history') }}'">
+        <div class="module-card-icon">🗄️</div>
+        <h3 class="module-card-title">Forensic History</h3>
+        <p class="module-card-desc">View the chain of custody and verifiable audit records for all previously analyzed media and claims.</p>
+        <button class="btn-module" onclick="event.stopPropagation(); window.location='{{ url_for('history') }}'">
+            View Records
+        </button>
     </div>
 </div>
 {% endblock %}
