@@ -461,83 +461,154 @@ tr:hover {
 
 .footer-info-grid {
     display: grid;
-    grid-template-columns: 1.2fr 1fr;
-    gap: 2.5rem;
+    grid-template-columns: 1.15fr 1fr;
+    gap: 2rem;
     margin-bottom: 2rem;
     text-align: left;
 }
 
-.footer-info-col h4 {
-    font-size: 1.05rem;
-    color: var(--text-primary);
-    margin-bottom: 0.75rem;
+.footer-card {
+    background: #FFFFFF;
+    border: 1px solid var(--border-color);
+    border-radius: 14px;
+    padding: 1.75rem 1.85rem;
+    box-shadow: var(--shadow-sm);
+    height: 100%;
     display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    font-weight: 700;
+    flex-direction: column;
+    transition: box-shadow 0.25s ease, border-color 0.25s ease;
 }
 
-.footer-info-col p {
+.footer-card:hover {
+    box-shadow: var(--shadow-md);
+    border-color: var(--border-hover);
+}
+
+.footer-card-header {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    margin-bottom: 1rem;
+}
+
+.footer-card-icon {
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    background: #F1F5F9;
+    border: 1px solid #E2E8F0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    flex-shrink: 0;
+}
+
+.footer-card-header h4 {
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    letter-spacing: -0.015em;
+    margin: 0;
+}
+
+.footer-card-text {
     font-size: 0.9rem;
-    line-height: 1.6;
+    line-height: 1.65;
+    color: var(--text-secondary);
+    margin: 0;
+}
+
+.status-items-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.9rem;
+    flex: 1;
+    justify-content: center;
+}
+
+.status-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.85rem;
+    font-size: 0.88rem;
+    line-height: 1.55;
     color: var(--text-secondary);
 }
 
-.status-indicator-box {
-    display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
-    background: #ffffff;
-    border: 1px solid var(--border-color);
-    border-radius: 8px;
-    padding: 1rem 1.25rem;
+.status-text {
+    flex: 1;
+    font-size: 0.88rem;
+    line-height: 1.55;
+    color: var(--text-secondary);
 }
 
-.status-line {
-    font-size: 0.88rem !important;
-    line-height: 1.5 !important;
-    margin: 0 !important;
-    color: var(--text-primary) !important;
+.status-text strong {
+    color: var(--text-primary);
+    font-weight: 600;
 }
 
 .status-badge-live {
-    display: inline-block;
-    background: rgba(34, 197, 94, 0.12);
-    color: #15803d;
-    font-size: 0.75rem;
-    font-weight: 700;
-    padding: 0.2rem 0.55rem;
-    border-radius: 999px;
-    margin-right: 0.4rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    background: #ECFDF5;
+    color: #065F46;
+    border: 1px solid #A7F3D0;
+    font-size: 0.74rem;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+    padding: 0.22rem 0.65rem;
+    border-radius: 6px;
     white-space: nowrap;
-    border: 1px solid rgba(34, 197, 94, 0.25);
+    flex-shrink: 0;
+    margin-top: 0.15rem;
+}
+
+.status-badge-live .status-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #10B981;
+    box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.2);
 }
 
 .status-badge-dev {
-    display: inline-block;
-    background: rgba(245, 158, 11, 0.12);
-    color: #b45309;
-    font-size: 0.75rem;
-    font-weight: 700;
-    padding: 0.2rem 0.55rem;
-    border-radius: 999px;
-    margin-right: 0.4rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    background: #F8FAFC;
+    color: #475569;
+    border: 1px solid #E2E8F0;
+    font-size: 0.74rem;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+    padding: 0.22rem 0.65rem;
+    border-radius: 6px;
     white-space: nowrap;
-    border: 1px solid rgba(245, 158, 11, 0.25);
+    flex-shrink: 0;
+    margin-top: 0.15rem;
 }
 
-.status-dev {
-    color: var(--text-secondary) !important;
-    border-top: 1px dashed var(--border-color);
-    padding-top: 0.65rem;
+.status-badge-dev .status-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #94A3B8;
+}
+
+.status-divider {
+    height: 1px;
+    background: #F1F5F9;
+    width: 100%;
 }
 
 .footer-bottom-bar {
     border-top: 1px solid var(--border-color);
-    padding-top: 1.25rem;
+    padding-top: 1.5rem;
     text-align: center;
-    font-size: 0.85rem;
-    color: var(--text-secondary);
+    font-size: 0.86rem;
+    color: var(--text-muted);
 }
 
 /* Card Status Badges on Dashboard */
