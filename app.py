@@ -112,6 +112,27 @@ def presentation_guide_pdf():
             return send_from_directory(candidate_dir, pdf_filename, as_attachment=False, mimetype='application/pdf')
     return "Presentation Guide PDF not found", 404
 
+@app.route('/presentation-slides')
+@app.route('/download-presentation')
+@app.route('/presentation.pptx')
+def presentation_slides_pptx():
+    pptx_filename = 'RumorBuster_Project_Presentation.pptx'
+    for candidate_dir in [
+        os.path.join(basedir, 'static', 'docs'),
+        os.path.join(basedir, 'public', 'static', 'docs'),
+        os.path.join(basedir, 'api', 'static', 'docs'),
+        basedir
+    ]:
+        if os.path.exists(os.path.join(candidate_dir, pptx_filename)):
+            return send_from_directory(
+                candidate_dir,
+                pptx_filename,
+                as_attachment=True,
+                download_name='RumorBuster_Project_Presentation.pptx',
+                mimetype='application/vnd.openxmlformats-officedocument.presentationml.presentation'
+            )
+    return "Presentation Slides PPTX not found", 404
+
 ALLOWED_EXTENSIONS_IMAGE = {'png', 'jpg', 'jpeg'}
 ALLOWED_EXTENSIONS_VIDEO = {'mp4', 'avi', 'mov'}
 
