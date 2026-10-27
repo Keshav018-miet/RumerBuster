@@ -98,6 +98,20 @@ def health():
         "css_found": os.path.exists(os.path.join(app.static_folder, 'css', 'style.css')) if app.static_folder else False
     }
 
+@app.route('/presentation-guide')
+@app.route('/download-presentation-guide')
+def presentation_guide_pdf():
+    pdf_filename = 'RumorBuster_Presentation_Defense_Guide.pdf'
+    for candidate_dir in [
+        os.path.join(basedir, 'static', 'docs'),
+        os.path.join(basedir, 'public', 'static', 'docs'),
+        os.path.join(basedir, 'api', 'static', 'docs'),
+        basedir
+    ]:
+        if os.path.exists(os.path.join(candidate_dir, pdf_filename)):
+            return send_from_directory(candidate_dir, pdf_filename, as_attachment=False, mimetype='application/pdf')
+    return "Presentation Guide PDF not found", 404
+
 ALLOWED_EXTENSIONS_IMAGE = {'png', 'jpg', 'jpeg'}
 ALLOWED_EXTENSIONS_VIDEO = {'mp4', 'avi', 'mov'}
 
