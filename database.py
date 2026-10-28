@@ -50,6 +50,24 @@ def init_db():
             timestamp DATETIME DEFAULT CURRENT_TIMESTAMP
         )
     ''')
+
+    c.execute('''
+        CREATE TABLE IF NOT EXISTS origin_traces (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            trace_id TEXT UNIQUE NOT NULL,
+            query_text TEXT NOT NULL,
+            query_type TEXT NOT NULL,
+            query_hash TEXT NOT NULL,
+            earliest_date TEXT,
+            ground_zero_source TEXT,
+            ground_zero_url TEXT,
+            domain_age_days INTEGER,
+            submitter_ip TEXT,
+            submitter_geo TEXT,
+            summary_json TEXT,
+            timestamp DATETIME DEFAULT CURRENT_TIMESTAMP
+        )
+    ''')
     conn.commit()
 
     # Seed default admin user if not exists
@@ -129,4 +147,47 @@ def get_record_by_id(record_id):
     record = conn.execute('SELECT * FROM forensic_records WHERE record_id = ?', (record_id,)).fetchone()
     conn.close()
     return dict(record) if record else None
+
+def save_origin_trace(data):
+    conn = get_db_connection()
+    c = conn.cursor()
+    c.execute('''
+        INSERT INTO origin_traces (
+            trace_id, query_text, query_type, query_hash, earliest_date,
+            ground_zero_source, ground_zero_url, domain_age_days,
+            submitter_ip, submitter_geo, summary_json
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    ''', (
+        data.get('trace_id'), data.get('query_text'), data.get('query_type'),
+        data.get('query_hash'), data.get('earliest_date'), data.get('ground_zero_source'),
+        data.get('ground_zero_url'), data.get('domain_age_days'), data.get('submitter_ip'),
+        data.get('submitter_geo'), data.get('summary_json')
+    ))
+    conn.commit()
+    conn.close()
+
+def get_origin_trace_recurrence(query_hash):
+    """Checks if a claim/URL hash was previously analyzed, returns count and first timestamp."""
+    conn = get_db_connection()
+    rows = conn.execute(
+        'SELECT trace_id, submitter_geo, timestamp FROM origin_traces WHERE query_hash = ? ORDER BY timestamp ASC',
+        (query_hash,)
+    ).fetchall()
+    conn.close()
+    if not rows:
+        return {"count": 0, "first_seen": None, "first_geo": None}
+    return {
+        "count": len(rows),
+        "first_seen": rows[0]['timestamp'],
+        "first_geo": rows[0]['submitter_geo']
+    }
+
+def get_all_origin_traces(limit=25):
+    conn = get_db_connection()
+    traces = conn.execute(
+        'SELECT * FROM origin_traces ORDER BY timestamp DESC LIMIT ?',
+        (limit,)
+    ).fetchall()
+    conn.close()
+    return [dict(t) for t in traces]
 

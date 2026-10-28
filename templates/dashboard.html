@@ -29,6 +29,16 @@
         </button>
     </div>
 
+    <!-- Origin Tracer (Ground Zero) -->
+    <div class="module-card" onclick="window.location='{{ url_for('origin_trace_ui') }}'">
+        <div class="module-card-icon">🧭</div>
+        <h3 class="module-card-title">Origin Tracer</h3>
+        <p class="module-card-desc">Find Ground Zero: Discover where a rumor, claim, or URL first originated, its earliest Wayback archive, domain age, and audit history.</p>
+        <button class="btn-module" onclick="event.stopPropagation(); window.location='{{ url_for('origin_trace_ui') }}'">
+            Trace Origin
+        </button>
+    </div>
+
     <!-- Image Analysis -->
     <div class="module-card" onclick="window.location='{{ url_for('image_analysis') }}'">
         <div class="module-card-icon">🖼️</div>

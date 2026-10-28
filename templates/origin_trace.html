@@ -1,0 +1,394 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="dashboard-header-section" style="margin-bottom: 2rem;">
+    <div>
+        <h2 class="dashboard-heading" style="display: flex; align-items: center; gap: 0.6rem;">
+            <span>🧭</span> Origin Tracer &amp; Ground Zero Analysis
+        </h2>
+        <p class="dashboard-subheading">
+            Track down where a viral rumor, claim, or suspicious web page first originated using Wayback Machine archives, ICANN domain intelligence, and historical news indexing.
+        </p>
+    </div>
+</div>
+
+<div class="card" style="padding: 2rem; border-radius: 12px; background: var(--card-bg); border: 1px solid var(--border-color); box-shadow: var(--shadow-sm);">
+    <div class="form-group" style="margin-bottom: 1.25rem;">
+        <label for="trace_query" style="display: block; font-weight: 600; margin-bottom: 0.6rem; color: var(--text-primary); font-size: 0.95rem;">
+            Enter Target URL or Viral Claim Headline
+        </label>
+        <textarea id="trace_query" class="form-control" rows="3" 
+            placeholder="e.g. https://theonion.com/article... OR 'Photo shows shark swimming on flooded highway in Florida'"
+            style="width: 100%; padding: 0.85rem 1rem; border: 1px solid var(--border-color); border-radius: 8px; font-size: 0.95rem; line-height: 1.5; resize: vertical;"></textarea>
+    </div>
+
+    <!-- Quick test pills -->
+    <div style="margin-bottom: 1.5rem; display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem;">
+        <span style="font-size: 0.82rem; color: var(--text-muted); font-weight: 500;">Quick Test Queries:</span>
+        <button type="button" class="sample-pill" onclick="setQuery('https://theonion.com')">🔗 theonion.com</button>
+        <button type="button" class="sample-pill" onclick="setQuery('Shark swimming on flooded highway hurricane')">🦈 Shark on highway flood</button>
+        <button type="button" class="sample-pill" onclick="setQuery('Pope Francis endorses Donald Trump')">🏛️ Pope endorses Trump</button>
+        <button type="button" class="sample-pill" onclick="setQuery('NASA confirms alien life discovered on Mars')">🛸 NASA discovers alien life</button>
+    </div>
+
+    <div style="display: flex; gap: 1rem; align-items: center;">
+        <button id="trace-btn" class="btn" style="background: var(--accent); color: #fff; padding: 0.75rem 1.75rem; border-radius: 8px; font-weight: 600; display: inline-flex; align-items: center; gap: 0.5rem; border: none; cursor: pointer; transition: all 0.2s;">
+            <span>🛰️</span> Trace Ground Zero
+        </button>
+        <span id="scan-hint" style="font-size: 0.85rem; color: var(--text-muted);">Queries Wayback Machine, ICANN RDAP &amp; News Archives legally.</span>
+    </div>
+
+    <!-- Loading State with Scanning Progress -->
+    <div id="loading-spinner" style="display: none; margin-top: 2rem; padding: 2rem; background: rgba(30, 41, 59, 0.03); border: 1px dashed var(--border-color); border-radius: 10px; text-align: center;">
+        <div style="font-size: 1.75rem; margin-bottom: 0.5rem; animation: pulse 1.5s infinite;">🛰️</div>
+        <h4 style="color: var(--accent); font-size: 1.05rem; margin-bottom: 0.5rem;">Conducting Origin &amp; Provenance Sweep...</h4>
+        <div id="loading-steps" style="display: flex; flex-direction: column; gap: 0.4rem; font-size: 0.85rem; color: var(--text-secondary); max-width: 480px; margin: 0.75rem auto 0 auto; text-align: left;">
+            <div id="step-1">⏳ 1. Checking Internet Archive (Wayback Machine CDX API)...</div>
+            <div id="step-2">⏳ 2. Querying ICANN RDAP Domain Age &amp; Registrar...</div>
+            <div id="step-3">⏳ 3. Scanning Historical News Archives &amp; Fact-Check Indexes...</div>
+            <div id="step-4">⏳ 4. Resolving Submitter IP Geolocation &amp; Forensic Fingerprint...</div>
+        </div>
+    </div>
+
+    <!-- Result Container -->
+    <div id="result-container" style="display: none; margin-top: 2.5rem;">
+        
+        <!-- Recurrence Alert Banner -->
+        <div id="recurrence-banner" style="display: none; padding: 0.85rem 1.25rem; border-radius: 8px; margin-bottom: 1.5rem; font-size: 0.88rem; align-items: center; gap: 0.75rem;">
+            <span style="font-size: 1.2rem;">⚡</span>
+            <div id="recurrence-text"></div>
+        </div>
+
+        <!-- Ground Zero Hero Banner -->
+        <div style="background: linear-gradient(135deg, #0F172A 0%, #1E293B 100%); color: #fff; padding: 2rem; border-radius: 12px; margin-bottom: 1.5rem; box-shadow: var(--shadow-md);">
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 1rem;">
+                <div>
+                    <span style="background: rgba(56, 189, 248, 0.2); color: #38BDF8; padding: 0.25rem 0.75rem; border-radius: 999px; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase;">
+                        Ground Zero Provenance
+                    </span>
+                    <h3 id="res-gz-source" style="font-size: 1.5rem; font-weight: 700; margin: 0.6rem 0 0.3rem 0; color: #FFFFFF;">
+                        <!-- Ground zero source -->
+                    </h3>
+                    <p id="res-gz-type" style="color: #94A3B8; font-size: 0.88rem; margin: 0;">
+                        <!-- Type -->
+                    </p>
+                </div>
+                <div style="text-align: right; background: rgba(255, 255, 255, 0.05); padding: 0.85rem 1.25rem; border-radius: 8px; border: 1px solid rgba(255, 255, 255, 0.1);">
+                    <div style="font-size: 0.75rem; color: #94A3B8; text-transform: uppercase; font-weight: 600;">Earliest Known Date</div>
+                    <div id="res-earliest-date" style="font-size: 1.35rem; font-weight: 800; color: #38BDF8; margin-top: 0.2rem;">
+                        <!-- Earliest date -->
+                    </div>
+                </div>
+            </div>
+
+            <div style="margin-top: 1.5rem; padding-top: 1rem; border-top: 1px solid rgba(255, 255, 255, 0.1); display: flex; flex-wrap: wrap; gap: 1.5rem; font-size: 0.85rem; color: #CBD5E1;">
+                <div><strong>Input Type:</strong> <span id="res-query-type"></span></div>
+                <div><strong>Submitter Node:</strong> <span id="res-submitter-node"></span></div>
+                <div><strong>Audit Hash:</strong> <code id="res-query-hash" style="color: #38BDF8; font-size: 0.8rem;"></code></div>
+                <div id="res-gz-link-container" style="display: none;">
+                    <strong>Source Evidence:</strong> <a id="res-gz-link" href="#" target="_blank" style="color: #38BDF8; text-decoration: underline;">View Original Link ↗</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- 3-Column Intelligence Grid -->
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.25rem; margin-bottom: 2rem;">
+            
+            <!-- Card 1: Internet Archive Wayback -->
+            <div style="padding: 1.5rem; background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 10px;">
+                <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.75rem;">
+                    <span style="font-size: 1.25rem;">🏛️</span>
+                    <h4 style="font-size: 1rem; color: var(--text-primary); margin: 0;">Wayback Machine</h4>
+                </div>
+                <div id="res-wb-body" style="font-size: 0.88rem; color: var(--text-secondary);">
+                    <!-- Wayback data -->
+                </div>
+            </div>
+
+            <!-- Card 2: Domain Age & Infrastructure (RDAP) -->
+            <div style="padding: 1.5rem; background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 10px;">
+                <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.75rem;">
+                    <span style="font-size: 1.25rem;">🌐</span>
+                    <h4 style="font-size: 1rem; color: var(--text-primary); margin: 0;">Domain Age (RDAP)</h4>
+                </div>
+                <div id="res-domain-body" style="font-size: 0.88rem; color: var(--text-secondary);">
+                    <!-- Domain data -->
+                </div>
+            </div>
+
+            <!-- Card 3: Submitter Geolocation & Chain -->
+            <div style="padding: 1.5rem; background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 10px;">
+                <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.75rem;">
+                    <span style="font-size: 1.25rem;">📍</span>
+                    <h4 style="font-size: 1rem; color: var(--text-primary); margin: 0;">Submitter Provenance</h4>
+                </div>
+                <div id="res-submitter-body" style="font-size: 0.88rem; color: var(--text-secondary);">
+                    <!-- Submitter data -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Chronological Provenance Timeline -->
+        <div style="background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 12px; padding: 2rem; margin-bottom: 2rem;">
+            <h3 style="font-size: 1.15rem; color: var(--accent); margin-bottom: 1.5rem; display: flex; align-items: center; gap: 0.5rem;">
+                <span>⏱️</span> Ground Zero Propagation Timeline
+            </h3>
+            <div id="timeline-container" style="position: relative; padding-left: 2rem; border-left: 2px solid var(--border-color); display: flex; flex-direction: column; gap: 1.5rem;">
+                <!-- Timeline events will be inserted here -->
+            </div>
+        </div>
+
+        <!-- News & Evidence References -->
+        <div id="news-sources-section" style="display: none; background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 12px; padding: 2rem; margin-bottom: 2rem;">
+            <h3 style="font-size: 1.15rem; color: var(--accent); margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem;">
+                <span>📰</span> Indexed Historical News &amp; Fact Checks
+            </h3>
+            <div id="news-list" style="display: flex; flex-direction: column; gap: 0.75rem;">
+                <!-- News items -->
+            </div>
+        </div>
+
+        <!-- Action Bar -->
+        <div style="display: flex; justify-content: space-between; align-items: center; padding-top: 1rem; border-top: 1px solid var(--border-color);">
+            <a href="{{ url_for('history') }}" class="btn btn-secondary" style="font-size: 0.88rem;">
+                🗄️ View Forensic History
+            </a>
+            <button onclick="window.print()" class="btn" style="background: var(--accent-slate); color: #fff; font-size: 0.88rem;">
+                🖨️ Export PDF Forensic Report
+            </button>
+        </div>
+
+    </div>
+</div>
+
+<style>
+.sample-pill {
+    background: #F1F5F9;
+    color: var(--text-secondary);
+    border: 1px solid var(--border-color);
+    padding: 0.35rem 0.75rem;
+    border-radius: 999px;
+    font-size: 0.82rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+.sample-pill:hover {
+    background: var(--accent);
+    color: #fff;
+    border-color: var(--accent);
+}
+@keyframes pulse {
+    0% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.15); opacity: 0.7; }
+    100% { transform: scale(1); opacity: 1; }
+}
+.timeline-event-node {
+    position: relative;
+}
+.timeline-event-node::before {
+    content: '';
+    position: absolute;
+    left: -2.4rem;
+    top: 0.25rem;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: var(--accent);
+    border: 3px solid #fff;
+    box-shadow: 0 0 0 2px var(--border-color);
+}
+</style>
+
+<script>
+function setQuery(text) {
+    document.getElementById('trace_query').value = text;
+}
+
+document.getElementById('trace-btn').addEventListener('click', async () => {
+    const query = document.getElementById('trace_query').value.trim();
+    if (!query) {
+        alert("Please enter a URL or claim statement to trace.");
+        return;
+    }
+
+    const btn = document.getElementById('trace-btn');
+    const spinner = document.getElementById('loading-spinner');
+    const resultBox = document.getElementById('result-container');
+
+    btn.disabled = true;
+    btn.innerHTML = '<span>⏳</span> Tracing...';
+    resultBox.style.display = 'none';
+    spinner.style.display = 'block';
+
+    try {
+        const response = await fetch('/api/origin_trace', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ query: query })
+        });
+
+        if (!response.ok) {
+            const errData = await response.json().catch(() => ({}));
+            throw new Error(errData.error || `Server returned ${response.status}`);
+        }
+
+        const data = await response.json();
+        renderOriginResults(data);
+    } catch (err) {
+        alert("Origin trace failed: " + err.message);
+    } finally {
+        btn.disabled = false;
+        btn.innerHTML = '<span>🛰️</span> Trace Ground Zero';
+        spinner.style.display = 'none';
+    }
+});
+
+function renderOriginResults(data) {
+    const resultBox = document.getElementById('result-container');
+    resultBox.style.display = 'block';
+
+    // Recurrence Banner
+    const recBanner = document.getElementById('recurrence-banner');
+    const recText = document.getElementById('recurrence-text');
+    if (data.recurrence && data.recurrence.is_repeat) {
+        recBanner.style.display = 'flex';
+        recBanner.style.background = 'rgba(245, 158, 11, 0.12)';
+        recBanner.style.border = '1px solid var(--warning)';
+        recBanner.style.color = '#92400E';
+        recText.innerHTML = `<strong>Repeat Investigation Detected:</strong> This claim/URL has been analyzed <strong>${data.recurrence.total_checks} times</strong> previously on RumorBuster. First seen on <code>${data.recurrence.first_seen_platform}</code> from <em>${data.recurrence.first_seen_location || 'Unknown Node'}</em>.`;
+    } else {
+        recBanner.style.display = 'flex';
+        recBanner.style.background = 'rgba(16, 185, 129, 0.1)';
+        recBanner.style.border = '1px solid var(--success)';
+        recBanner.style.color = '#065F46';
+        recText.innerHTML = `<strong>Ground Zero Indexed:</strong> First time this topic has been indexed in the RumorBuster Forensic Vault. Logged as Origin Node #1.`;
+    }
+
+    // Hero Section
+    const gz = data.ground_zero || {};
+    document.getElementById('res-gz-source').innerText = gz.source || 'Unknown Origin Source';
+    document.getElementById('res-gz-type').innerText = gz.type || 'Digital Media Trace';
+    document.getElementById('res-earliest-date').innerText = data.earliest_date || 'Undated';
+    document.getElementById('res-query-type').innerText = data.query_type;
+    document.getElementById('res-submitter-node').innerText = (data.submitter && data.submitter.formatted) ? data.submitter.formatted : 'Unknown';
+    document.getElementById('res-query-hash').innerText = (data.query_hash || '').substring(0, 16) + '...';
+
+    if (gz.url && gz.url !== '#') {
+        document.getElementById('res-gz-link-container').style.display = 'block';
+        document.getElementById('res-gz-link').href = gz.url;
+    } else {
+        document.getElementById('res-gz-link-container').style.display = 'none';
+    }
+
+    // Card 1: Wayback Machine
+    const wb = data.wayback_intel;
+    const wbBody = document.getElementById('res-wb-body');
+    if (wb && wb.found) {
+        wbBody.innerHTML = `
+            <div style="margin-bottom: 0.4rem;"><strong>Earliest Snapshot:</strong> <span style="color: var(--success); font-weight:600;">${wb.earliest_date}</span></div>
+            <div style="margin-bottom: 0.4rem;"><strong>Total Captures:</strong> ${wb.total_snapshots} archived snapshots</div>
+            <div style="margin-top: 0.6rem;"><a href="${wb.earliest_snapshot_url}" target="_blank" style="color: #2563EB; font-weight: 500; text-decoration: underline;">View Wayback Snapshot ↗</a></div>
+        `;
+    } else if (wb && wb.domain_earliest_date) {
+        wbBody.innerHTML = `
+            <div style="margin-bottom: 0.4rem;">No exact page archive, but domain root first archived on:</div>
+            <div style="color: var(--accent); font-weight: 600;">${wb.domain_earliest_date}</div>
+            <div style="margin-top: 0.6rem;"><a href="${wb.domain_snapshot_url}" target="_blank" style="color: #2563EB; font-weight: 500; text-decoration: underline;">View Domain Archive ↗</a></div>
+        `;
+    } else {
+        wbBody.innerHTML = `<span style="color: var(--text-muted);">No historical Wayback Machine capture indexed for this exact entity.</span>`;
+    }
+
+    // Card 2: Domain Age (RDAP)
+    const dom = data.domain_intel;
+    const domBody = document.getElementById('res-domain-body');
+    if (dom && dom.success) {
+        let badgeColor = dom.risk_level === 'HIGH' ? '#EF4444' : (dom.risk_level === 'MEDIUM' ? '#F59E0B' : '#10B981');
+        domBody.innerHTML = `
+            <div style="margin-bottom: 0.4rem;"><strong>Registered:</strong> ${dom.registration_date}</div>
+            <div style="margin-bottom: 0.4rem;"><strong>Domain Age:</strong> ${dom.age_formatted || (dom.age_days + ' days')}</div>
+            <div style="margin-bottom: 0.4rem;"><strong>Registrar:</strong> ${dom.registrar || 'ICANN Registry'}</div>
+            <div style="margin-top: 0.5rem; display: inline-block; padding: 0.2rem 0.5rem; border-radius: 4px; background: ${badgeColor}22; color: ${badgeColor}; font-weight: 700; font-size: 0.75rem;">
+                ${dom.risk_level} RISK DOMAIN
+            </div>
+        `;
+    } else {
+        domBody.innerHTML = `<span style="color: var(--text-muted);">RDAP analysis applicable for domain and web page inputs.</span>`;
+    }
+
+    // Card 3: Submitter
+    const sub = data.submitter || {};
+    const subBody = document.getElementById('res-submitter-body');
+    subBody.innerHTML = `
+        <div style="margin-bottom: 0.4rem;"><strong>Client IP:</strong> <code>${sub.ip || 'Unknown'}</code></div>
+        <div style="margin-bottom: 0.4rem;"><strong>Location:</strong> ${sub.city || 'Unknown'}, ${sub.country || 'Unknown'}</div>
+        <div style="margin-bottom: 0.4rem;"><strong>ISP/Org:</strong> ${sub.isp || 'Internal Network'}</div>
+        <div style="color: var(--text-muted); font-size: 0.8rem; margin-top: 0.4rem;">Timestamp: ${data.timestamp}</div>
+    `;
+
+    // Timeline
+    const timelineBox = document.getElementById('timeline-container');
+    timelineBox.innerHTML = '';
+    const events = data.timeline || [];
+    if (events.length === 0) {
+        timelineBox.innerHTML = '<div style="color: var(--text-muted);">No timeline events recorded.</div>';
+    } else {
+        events.forEach(ev => {
+            const evDiv = document.createElement('div');
+            evDiv.className = 'timeline-event-node';
+            
+            let badgeBg = '#E2E8F0';
+            let badgeFg = '#1E293B';
+            if (ev.badge === 'Infrastructure') { badgeBg = '#DBEAFE'; badgeFg = '#1E40AF'; }
+            else if (ev.badge === 'Web Archive') { badgeBg = '#E0E7FF'; badgeFg = '#3730A3'; }
+            else if (ev.badge === 'Claim Origin') { badgeBg = '#FEE2E2'; badgeFg = '#991B1B'; }
+            else if (ev.badge === 'Fact Check') { badgeBg = '#FEF3C7'; badgeFg = '#92400E'; }
+            else if (ev.badge === 'Forensic Log') { badgeBg = '#D1FAE5'; badgeFg = '#065F46'; }
+
+            evDiv.innerHTML = `
+                <div style="display: flex; align-items: center; gap: 0.6rem; margin-bottom: 0.25rem;">
+                    <span style="font-weight: 700; font-size: 0.92rem; color: var(--accent);">${ev.date}</span>
+                    <span style="background: ${badgeBg}; color: ${badgeFg}; font-size: 0.72rem; font-weight: 600; padding: 0.15rem 0.5rem; border-radius: 4px;">
+                        ${ev.badge}
+                    </span>
+                </div>
+                <div style="font-weight: 600; font-size: 0.95rem; color: var(--text-primary); margin-bottom: 0.2rem;">
+                    ${ev.title}
+                </div>
+                <div style="font-size: 0.86rem; color: var(--text-secondary); line-height: 1.4;">
+                    ${ev.description}
+                </div>
+                ${ev.url && ev.url !== '#' ? `<div style="margin-top: 0.3rem;"><a href="${ev.url}" target="_blank" style="color: #2563EB; font-size: 0.82rem; text-decoration: underline;">View Record ↗</a></div>` : ''}
+            `;
+            timelineBox.appendChild(evDiv);
+        });
+    }
+
+    // News & Evidence Section
+    const newsSection = document.getElementById('news-sources-section');
+    const newsList = document.getElementById('news-list');
+    newsList.innerHTML = '';
+    const news = data.news_sources || [];
+    if (news.length > 0) {
+        newsSection.style.display = 'block';
+        news.forEach(n => {
+            const nDiv = document.createElement('div');
+            nDiv.style.cssText = 'padding: 0.75rem 1rem; border: 1px solid var(--border-color); border-radius: 8px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem;';
+            nDiv.innerHTML = `
+                <div>
+                    <div style="font-weight: 600; font-size: 0.9rem; color: var(--text-primary);">${n.title}</div>
+                    <div style="font-size: 0.8rem; color: var(--text-muted);">${n.source} &bull; ${n.formatted_date || n.raw_date}</div>
+                </div>
+                <a href="${n.link}" target="_blank" class="btn btn-secondary" style="padding: 0.3rem 0.75rem; font-size: 0.8rem;">Read Article ↗</a>
+            `;
+            newsList.appendChild(nDiv);
+        });
+    } else {
+        newsSection.style.display = 'none';
+    }
+
+    // Smooth scroll to results
+    resultBox.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+</script>
+{% endblock %}

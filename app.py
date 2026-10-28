@@ -511,5 +511,59 @@ def verify_live():
         "ai_disabled": result.get("ai_disabled", False)
     }
 
+@app.route('/origin_trace', methods=['GET'])
+@login_required
+def origin_trace_ui():
+    return render_template('origin_trace.html')
+
+@app.route('/api/origin_trace', methods=['POST'])
+@login_required
+def api_origin_trace():
+    data = request.get_json()
+    if not data or 'query' not in data:
+        return {"error": "Missing query or URL to trace"}, 400
+        
+    query = data['query'].strip()
+    if not query:
+        return {"error": "Query cannot be empty"}, 400
+        
+    # Extract client IP (handle Cloudflare header and proxy headers)
+    client_ip = (
+        request.headers.get('CF-Connecting-IP') or
+        request.headers.get('X-Forwarded-For', '').split(',')[0].strip() or
+        request.remote_addr
+    )
+    
+    import source_tracer
+    report = source_tracer.build_origin_trace_report(
+        query,
+        client_ip=client_ip,
+        factcheck_api_key=os.getenv('GEMINI_API_KEY')
+    )
+    
+    # Save to main forensic_records as well for universal audit chain
+    record_id = str(uuid.uuid4())
+    gz = report.get('ground_zero', {})
+    gz_source = gz.get('source', 'Unknown Origin')
+    earliest_date = report.get('earliest_date', 'Unknown')
+    
+    record_data = {
+        'record_id': record_id,
+        'analysis_type': 'Origin & Provenance Trace',
+        'input_name': query[:60] + ('...' if len(query) > 60 else ''),
+        'file_type': report.get('query_type', 'query').lower(),
+        'file_size': len(query),
+        'sha256_hash': report.get('query_hash'),
+        'perceptual_hash': None,
+        'result': f"Ground Zero: {gz_source} ({earliest_date})",
+        'confidence': 92.0 if earliest_date != 'Unknown' else 60.0,
+        'metadata_json': json.dumps(report, default=str),
+        'fact_check_info': f"Earliest archive: {earliest_date}. Traced from submitter {report.get('submitter', {}).get('formatted', 'Unknown')}."
+    }
+    save_record(record_data)
+    report['record_id'] = record_id
+    
+    return report
+
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000, debug=True)

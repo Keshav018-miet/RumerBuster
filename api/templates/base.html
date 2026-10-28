@@ -13,6 +13,7 @@
             {% if session.get('user_id') %}
                 <a href="{{ url_for('dashboard') }}">Dashboard</a>
                 <a href="{{ url_for('live_fact_check_ui') }}">Live Search</a>
+                <a href="{{ url_for('origin_trace_ui') }}">Origin Tracer</a>
                 <a href="{{ url_for('history') }}">History</a>
                 <span style="color: var(--accent); font-weight: bold; margin-left: 0.5rem; margin-right: 0.5rem;">👤 {{ session.get('username') }}</span>
                 <a href="{{ url_for('logout') }}" class="btn btn-secondary" style="padding: 0.25rem 0.75rem; font-size: 0.85rem;">Logout</a>
@@ -61,7 +62,7 @@
                             <div class="status-item">
                                 <span class="status-badge-live"><span class="status-dot"></span> Operational</span>
                                 <div class="status-text">
-                                    <strong>News Analysis</strong> (NLP / Machine Learning) and <strong>Live Web Fact-Checker</strong> (Real-time AI RAG Search) are active and fully operational.
+                                    <strong>News Analysis</strong> (NLP / Machine Learning), <strong>Live Web Fact-Checker</strong> (Real-time AI RAG Search), and <strong>Origin Tracer</strong> (Wayback &amp; Provenance) are active and fully operational.
                                 </div>
                             </div>
                             <div class="status-divider"></div>
