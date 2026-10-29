@@ -133,6 +133,28 @@ def presentation_slides_pptx():
             )
     return "Presentation Slides PPTX not found", 404
 
+@app.route('/manual')
+@app.route('/project-manual')
+@app.route('/download-manual')
+@app.route('/manual.pdf')
+def complete_project_manual_pdf():
+    manual_filename = 'RumorBuster_Complete_Project_Manual.pdf'
+    for candidate_dir in [
+        os.path.join(basedir, 'static', 'docs'),
+        os.path.join(basedir, 'public', 'static', 'docs'),
+        os.path.join(basedir, 'api', 'static', 'docs'),
+        basedir
+    ]:
+        if os.path.exists(os.path.join(candidate_dir, manual_filename)):
+            return send_from_directory(
+                candidate_dir,
+                manual_filename,
+                as_attachment=False,
+                download_name='RumorBuster_Complete_Project_Manual.pdf',
+                mimetype='application/pdf'
+            )
+    return "Project Manual PDF not found", 404
+
 ALLOWED_EXTENSIONS_IMAGE = {'png', 'jpg', 'jpeg'}
 ALLOWED_EXTENSIONS_VIDEO = {'mp4', 'avi', 'mov'}
 
