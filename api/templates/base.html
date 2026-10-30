@@ -20,6 +20,7 @@
     <header>
         <a href="{{ url_for('index') }}" class="logo">RUMORBUSTER</a>
         <nav class="nav-links">
+            <a href="{{ url_for('overview') }}">Overview</a>
             {% if session.get('user_id') %}
                 <a href="{{ url_for('dashboard') }}">Dashboard</a>
                 <a href="{{ url_for('live_fact_check_ui') }}">Live Search</a>
@@ -92,6 +93,7 @@
             <div class="footer-bottom-bar">
                 <p>&copy; 2026 RumorBuster. Dedicated to digital content verification and media integrity.</p>
                 <div style="margin-top: 0.5rem; display: flex; justify-content: center; gap: 1.5rem; font-size: 0.85rem; flex-wrap: wrap;">
+                    <a href="{{ url_for('overview') }}" style="color: var(--accent); text-decoration: none; font-weight: 600;">ℹ️ App Overview</a>
                     <a href="{{ url_for('complete_project_manual_pdf') }}" target="_blank" style="color: var(--accent); text-decoration: none; font-weight: 600;">📘 Complete Project Manual (PDF)</a>
                     <a href="{{ url_for('presentation_guide_pdf') }}" target="_blank" style="color: var(--accent); text-decoration: none; font-weight: 500;">📄 Presentation Defense Guide (PDF)</a>
                     <a href="{{ url_for('presentation_slides_pptx') }}" style="color: var(--accent); text-decoration: none; font-weight: 500;">📊 Project Presentation Slides (.PPTX)</a>

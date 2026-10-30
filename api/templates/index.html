@@ -6,6 +6,9 @@
     <h2>Digital Content Verification & Forensic Analysis</h2>
     <p>RumorBuster is a digital forensic system designed to analyze suspicious news, images and videos and verify their authenticity and integrity.</p>
     
-    <a href="{{ url_for('dashboard') }}" class="btn btn-large">GET STARTED</a>
+    <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+        <a href="{{ url_for('dashboard') }}" class="btn btn-large">GET STARTED</a>
+        <a href="{{ url_for('overview') }}" class="btn btn-large btn-secondary">APP OVERVIEW</a>
+    </div>
 </div>
 {% endblock %}

@@ -174,6 +174,19 @@ def login_required(f):
 def index():
     return render_template('index.html')
 
+@app.route('/overview')
+@app.route('/about')
+def overview():
+    benchmarks = {
+        "cold_boot": "1.1s",
+        "nlp_latency": "2.4 ms",
+        "face_crop": "~120 ms",
+        "hashing_speed": "< 45 ms",
+        "rag_retrieval": "1.8s - 2.4s",
+        "origin_query": "850 ms - 1.2s"
+    }
+    return render_template('overview.html', benchmarks=benchmarks)
+
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if session.get('user_id'):
