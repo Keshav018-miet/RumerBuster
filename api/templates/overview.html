@@ -1,410 +1,597 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="overview-container" style="max-width: 1100px; margin: 0 auto; padding-bottom: 3rem;">
+<div class="overview-container" style="max-width: 1180px; margin: 0 auto; padding-bottom: 3.5rem;">
     
-    <!-- Hero Header -->
-    <div style="text-align: center; margin-bottom: 3rem; padding: 2.5rem 1.5rem; background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 16px; box-shadow: var(--shadow-sm);">
-        <span class="brand-pill" style="margin-bottom: 0.75rem;">⚡ PLATFORM ARCHITECTURE &amp; EXECUTIVE BRIEF</span>
-        <h1 style="font-size: 2.5rem; font-weight: 800; color: var(--text-primary); margin-bottom: 0.75rem; letter-spacing: -0.02em;">
-            Inside RumorBuster
-        </h1>
-        <p style="font-size: 1.1rem; color: var(--text-secondary); max-width: 780px; margin: 0 auto 1.5rem auto; line-height: 1.6;">
-            A next-generation digital forensics, provenance tracing, and multi-modal content verification platform engineered to detect digital disinformation and synthetic media.
-        </p>
-        <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
-            <a href="{{ url_for('dashboard') }}" class="btn">🚀 Open Dashboard</a>
-            <a href="{{ url_for('origin_trace_ui') }}" class="btn btn-secondary">🧭 Test Origin Tracer</a>
-            <a href="{{ url_for('complete_project_manual_pdf') }}" target="_blank" class="btn btn-secondary">📘 Download Manual (PDF)</a>
-        </div>
-    </div>
-
-    <!-- Quick Navigation Jump Bar -->
-    <div style="display: flex; gap: 0.75rem; justify-content: center; flex-wrap: wrap; margin-bottom: 2.5rem;">
-        <a href="#problem-statement" class="sample-pill" style="text-decoration: none;">1. Problem Statement</a>
-        <a href="#the-difference" class="sample-pill" style="text-decoration: none;">2. The RumorBuster Difference</a>
-        <a href="#main-functionality" class="sample-pill" style="text-decoration: none;">3. Core Functionality</a>
-        <a href="#technology-stack" class="sample-pill" style="text-decoration: none;">4. Technology Stack</a>
-        <a href="#benchmarks" class="sample-pill" style="text-decoration: none;">5. Performance Benchmarks</a>
-    </div>
-
-    <!-- SECTION 1: PROBLEM STATEMENT -->
-    <section id="problem-statement" class="card" style="margin-bottom: 2.5rem; border-radius: 16px;">
-        <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem;">
-            <span style="font-size: 1.6rem;">🎯</span>
+    <!-- Title Slide / Executive Presentation Header -->
+    <div class="card" style="margin-bottom: 2rem; padding: 2.75rem 2rem; border-radius: 16px; background: linear-gradient(135deg, #0F172A 0%, #1E293B 100%); color: #FFFFFF; border: 1px solid rgba(255,255,255,0.1); box-shadow: var(--shadow-lg);">
+        <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 1rem; margin-bottom: 1.25rem;">
             <div>
-                <span style="font-size: 0.78rem; text-transform: uppercase; font-weight: 700; color: var(--danger); letter-spacing: 0.8px;">Critical Challenge</span>
-                <h2 style="font-size: 1.5rem; font-weight: 700; color: var(--text-primary); margin: 0;">1. The Problem Statement</h2>
+                <span style="background: rgba(56, 189, 248, 0.18); color: #38BDF8; padding: 0.35rem 0.85rem; border-radius: 999px; font-size: 0.78rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase;">
+                    AI-POWERED MULTIMEDIA FORENSICS &amp; VERIFICATION
+                </span>
+                <h1 style="font-size: 2.6rem; font-weight: 800; color: #FFFFFF; margin: 0.85rem 0 0.4rem 0; letter-spacing: -0.02em;">
+                    RUMORBUSTER
+                </h1>
+                <p style="font-size: 1.15rem; color: #CBD5E1; margin: 0; font-weight: 500;">
+                    Digital Content Verification &amp; Multimedia Forensic Analysis Platform
+                </p>
+            </div>
+            
+            <!-- Quick Download Action Bar -->
+            <div style="display: flex; flex-direction: column; gap: 0.6rem; align-items: flex-end;">
+                <a href="{{ url_for('presentation_slides_pptx') }}" class="btn" style="background: #38BDF8; color: #0A0F1D; font-weight: 700; font-size: 0.9rem; padding: 0.65rem 1.25rem; border-radius: 8px;">
+                    📊 Download Slides (.PPTX)
+                </a>
+                <a href="{{ url_for('complete_project_manual_pdf') }}" target="_blank" class="btn btn-secondary" style="background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.2); color: #FFFFFF; font-size: 0.85rem; padding: 0.5rem 1rem;">
+                    📘 Project Manual (PDF)
+                </a>
             </div>
         </div>
-        <p style="color: var(--text-secondary); font-size: 1rem; line-height: 1.7; margin-bottom: 1.25rem;">
-            The digital information ecosystem is facing an unprecedented crisis. With the democratization of generative artificial intelligence and high-speed social networks, fabricated stories and altered media spread six times faster than verified facts.
-        </p>
-        
+
+        <!-- Technical Metadata Grid -->
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1rem; padding-top: 1.5rem; border-top: 1px solid rgba(255, 255, 255, 0.12); font-size: 0.88rem; color: #E2E8F0;">
+            <div>
+                <strong style="color: #38BDF8; display: block; font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 0.2rem;">Core Engineering</strong>
+                Python 3.11+, Flask WSGI, PyTorch, Scikit-learn, Google Gemini 2.5 Flash (RAG)
+            </div>
+            <div>
+                <strong style="color: #38BDF8; display: block; font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 0.2rem;">Computer Vision</strong>
+                Facenet-PyTorch (MTCNN 30% margin) + timm (EfficientNet-B7 DFDC Winner)
+            </div>
+            <div>
+                <strong style="color: #38BDF8; display: block; font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 0.2rem;">Deployments</strong>
+                Vercel Edge Serverless &amp; Cloudflare Secure Tunnel (Live Daemon)
+            </div>
+            <div>
+                <strong style="color: #38BDF8; display: block; font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 0.2rem;">Source Code</strong>
+                <a href="https://github.com/Keshav018-miet/RumerBuster" target="_blank" style="color: #38BDF8; text-decoration: underline; word-break: break-all;">
+                    GitHub: Keshav018-miet/RumerBuster (main)
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Presentation Slide Switcher / Interactive Navigation -->
+    <div style="background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 14px; padding: 1rem 1.25rem; margin-bottom: 2.5rem; box-shadow: var(--shadow-sm); display: flex; flex-direction: column; gap: 0.75rem;">
+        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem;">
+            <div style="font-size: 0.82rem; font-weight: 700; text-transform: uppercase; color: var(--text-muted); letter-spacing: 0.8px;">
+                📑 Interactive Slide Deck Navigator
+            </div>
+            <div style="font-size: 0.82rem; color: var(--text-secondary);">
+                Click to jump directly to any presentation slide
+            </div>
+        </div>
+        <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+            <a href="#slide-01" class="sample-pill" style="text-decoration: none;">01. Problem &amp; Objective</a>
+            <a href="#slide-02" class="sample-pill" style="text-decoration: none;">02. Architecture &amp; Pipeline</a>
+            <a href="#slide-03" class="sample-pill" style="text-decoration: none;">03. Text &amp; News Verification</a>
+            <a href="#slide-04" class="sample-pill" style="text-decoration: none;">04. Computer Vision Forensics</a>
+            <a href="#slide-05" class="sample-pill" style="text-decoration: none;">05. Cryptographic Forensics</a>
+            <a href="#slide-06" class="sample-pill" style="text-decoration: none;">06. DevOps &amp; Infrastructure</a>
+            <a href="#slide-07" class="sample-pill" style="text-decoration: none;">07. Benchmarks &amp; Roadmap</a>
+        </div>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- SLIDE 01: PROBLEM & OBJECTIVE              -->
+    <!-- ========================================== -->
+    <section id="slide-01" class="card" style="margin-bottom: 2.5rem; border-radius: 16px; scroll-margin-top: 2rem;">
+        <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1.25rem;">
+            <div>
+                <span class="slide-num-badge">SLIDE 01</span>
+                <h2 style="font-size: 1.6rem; font-weight: 700; color: var(--text-primary); margin: 0.35rem 0 0.2rem 0;">
+                    01. PROBLEM &amp; OBJECTIVE
+                </h2>
+                <div style="font-size: 1.05rem; font-weight: 600; color: var(--accent);">
+                    The Disinformation Crisis &amp; Our Core Solution
+                </div>
+            </div>
+            <span style="font-size: 0.85rem; color: var(--text-muted); font-style: italic;">
+                Why automated multi-modal verification is urgently required for digital integrity.
+            </span>
+        </div>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.5rem;">
+            
+            <!-- Column 1: The Disinformation Landscape -->
+            <div style="background: var(--bg-color); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.5rem;">
+                <h3 style="font-size: 1.15rem; color: var(--danger); margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem;">
+                    <span>⚠️</span> The Disinformation Landscape
+                </h3>
+                <ul style="padding-left: 1.25rem; margin: 0; display: flex; flex-direction: column; gap: 0.85rem; font-size: 0.92rem; color: var(--text-secondary); line-height: 1.55;">
+                    <li>
+                        <strong style="color: var(--text-primary);">Viral Misinformation Spread:</strong> False news and deceptive claims travel <strong>6x faster</strong> than verified truth across social media channels.
+                    </li>
+                    <li>
+                        <strong style="color: var(--text-primary);">Proliferation of Synthetic Media:</strong> Accessible AI deepfakes and generative imaging make digital manipulation indistinguishable to the human eye.
+                    </li>
+                    <li>
+                        <strong style="color: var(--text-primary);">Manual Fact-Checking Bottleneck:</strong> Traditional journalism takes hours or days to verify breaking events, leaving public safety vulnerable.
+                    </li>
+                    <li>
+                        <strong style="color: var(--text-primary);">Static Model Blindness:</strong> Standard NLP classifiers trained on static datasets hallucinate or fail entirely on real-time breaking events.
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Column 2: The RumorBuster Mission -->
+            <div style="background: var(--bg-color); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.5rem;">
+                <h3 style="font-size: 1.15rem; color: var(--success); margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem;">
+                    <span>🎯</span> The RumorBuster Mission
+                </h3>
+                <ul style="padding-left: 1.25rem; margin: 0; display: flex; flex-direction: column; gap: 0.85rem; font-size: 0.92rem; color: var(--text-secondary); line-height: 1.55;">
+                    <li>
+                        <strong style="color: var(--text-primary);">Automated Multi-Modal Forensics:</strong> Verifies text statements, live web claims, facial images, and file tampering in <strong>under 3 seconds</strong>.
+                    </li>
+                    <li>
+                        <strong style="color: var(--text-primary);">Concurrent RAG Fact-Checking:</strong> Queries 5 live news services simultaneously with strict 24-48h recency filtering and Gemini 2.5 Flash synthesis.
+                    </li>
+                    <li>
+                        <strong style="color: var(--text-primary);">Kaggle DFDC-Winning Vision:</strong> Employs MTCNN face extraction with 30% margin expansion and EfficientNet-B7 classification.
+                    </li>
+                    <li>
+                        <strong style="color: var(--text-primary);">Auditable Chain of Custody:</strong> Issues cryptographic SHA-256 and perceptual pHash forensic reports with immutable UUID records.
+                    </li>
+                </ul>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ========================================== -->
+    <!-- SLIDE 02: ARCHITECTURE & PIPELINE          -->
+    <!-- ========================================== -->
+    <section id="slide-02" class="card" style="margin-bottom: 2.5rem; border-radius: 16px; scroll-margin-top: 2rem;">
+        <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1.25rem;">
+            <div>
+                <span class="slide-num-badge">SLIDE 02</span>
+                <h2 style="font-size: 1.6rem; font-weight: 700; color: var(--text-primary); margin: 0.35rem 0 0.2rem 0;">
+                    02. ARCHITECTURE &amp; PIPELINE
+                </h2>
+                <div style="font-size: 1.05rem; font-weight: 600; color: var(--accent);">
+                    Modular Multi-Tier Forensic Engineering
+                </div>
+            </div>
+            <span style="font-size: 0.85rem; color: var(--text-muted); font-style: italic;">
+                End-to-end request lifecycle from multi-modal input to cryptographic audit report.
+            </span>
+        </div>
+
         <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.25rem;">
-            <div style="background: var(--bg-color); border: 1px solid var(--border-color); border-radius: 10px; padding: 1.25rem;">
-                <div style="font-weight: 700; color: var(--text-primary); margin-bottom: 0.4rem; display: flex; align-items: center; gap: 0.4rem;">
-                    <span>📢</span> Viral Disinformation Crisis
-                </div>
-                <p style="font-size: 0.88rem; color: var(--text-secondary); margin: 0; line-height: 1.55;">
-                    Unverified rumors, out-of-context headlines, and coordinated propaganda campaigns can destabilize public health, disrupt financial markets, and polarize democratic elections before manual fact-checkers can respond.
-                </p>
-            </div>
-
-            <div style="background: var(--bg-color); border: 1px solid var(--border-color); border-radius: 10px; padding: 1.25rem;">
-                <div style="font-weight: 700; color: var(--text-primary); margin-bottom: 0.4rem; display: flex; align-items: center; gap: 0.4rem;">
-                    <span>🎭</span> Deepfakes &amp; Synthetic Media
-                </div>
-                <p style="font-size: 0.88rem; color: var(--text-secondary); margin: 0; line-height: 1.55;">
-                    Advanced neural models (GANs, diffusion transformers) enable bad actors to clone voices, generate synthetic facial expressions, and swap identities in video with high realism, eroding trust in audiovisual evidence.
-                </p>
-            </div>
-
-            <div style="background: var(--bg-color); border: 1px solid var(--border-color); border-radius: 10px; padding: 1.25rem;">
-                <div style="font-weight: 700; color: var(--text-primary); margin-bottom: 0.4rem; display: flex; align-items: center; gap: 0.4rem;">
-                    <span>⏱️</span> The Verification Bottleneck
-                </div>
-                <p style="font-size: 0.88rem; color: var(--text-secondary); margin: 0; line-height: 1.55;">
-                    Traditional verification is slow, labor-intensive, and fragmented. Journalists require hours or days to trace citations, analyze forensic metadata, and reach consensus, leaving the public unprotected during breaking events.
-                </p>
-            </div>
-        </div>
-    </section>
-
-    <!-- SECTION 2: THE RUMORBUSTER DIFFERENCE -->
-    <section id="the-difference" class="card" style="margin-bottom: 2.5rem; border-radius: 16px;">
-        <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem;">
-            <span style="font-size: 1.6rem;">💡</span>
-            <div>
-                <span style="font-size: 0.78rem; text-transform: uppercase; font-weight: 700; color: var(--success); letter-spacing: 0.8px;">Competitive Advantage</span>
-                <h2 style="font-size: 1.5rem; font-weight: 700; color: var(--text-primary); margin: 0;">2. The RumorBuster Difference</h2>
-            </div>
-        </div>
-        <p style="color: var(--text-secondary); font-size: 1rem; line-height: 1.7; margin-bottom: 1.5rem;">
-            Unlike standard fact-checking blogs or isolated black-box AI tools, RumorBuster is an integrated digital forensic workbench that provides <strong>real-time multi-modal analysis</strong> backed by <strong>immutable cryptographic auditability</strong>.
-        </p>
-
-        <!-- Comparison Table -->
-        <div class="table-container" style="border: 1px solid var(--border-color); border-radius: 10px; overflow: hidden;">
-            <table style="margin-top: 0;">
-                <thead>
-                    <tr>
-                        <th style="width: 25%;">Capability / Metric</th>
-                        <th style="width: 37%; color: var(--text-muted);">Traditional Fact-Checkers</th>
-                        <th style="width: 38%; color: var(--accent); font-weight: 700;">RumorBuster Platform</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td><strong>Verification Speed</strong></td>
-                        <td>Manual human research (24 to 72 hours)</td>
-                        <td><span style="color: var(--success); font-weight: 600;">⚡ Real-time (1.8s - 2.4s automated RAG)</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Modality Coverage</strong></td>
-                        <td>Text statements only or separate tools</td>
-                        <td><span style="color: var(--success); font-weight: 600;">🧩 Multi-Modal: Text, Web, Image &amp; Origin</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Origin &amp; Provenance</strong></td>
-                        <td>Speculative / manual Wayback searches</td>
-                        <td><span style="color: var(--success); font-weight: 600;">🧭 Automated CDX + ICANN RDAP Ground Zero</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Evidence Integrity</strong></td>
-                        <td>No cryptographic proof; trust publisher</td>
-                        <td><span style="color: var(--success); font-weight: 600;">🔒 Dual Hashes (SHA-256 + pHash) in SQLite</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>AI Hallucination Guard</strong></td>
-                        <td>N/A (Editorial) or unconstrained LLMs</td>
-                        <td><span style="color: var(--success); font-weight: 600;">🛡️ Strict schema-grounded RAG verification</span></td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-    </section>
-
-    <!-- SECTION 3: MAIN FUNCTIONALITY -->
-    <section id="main-functionality" class="card" style="margin-bottom: 2.5rem; border-radius: 16px;">
-        <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem;">
-            <span style="font-size: 1.6rem;">⚙️</span>
-            <div>
-                <span style="font-size: 0.78rem; text-transform: uppercase; font-weight: 700; color: var(--accent); letter-spacing: 0.8px;">End-to-End Pipeline</span>
-                <h2 style="font-size: 1.5rem; font-weight: 700; color: var(--text-primary); margin: 0;">3. Main Functionality &amp; Core Modules</h2>
-            </div>
-        </div>
-        <p style="color: var(--text-secondary); font-size: 1rem; line-height: 1.7; margin-bottom: 1.5rem;">
-            RumorBuster provides five specialized forensic modules linked through a central chain of custody:
-        </p>
-
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(310px, 1fr)); gap: 1.25rem;">
             
-            <!-- Module 1 -->
-            <div style="background: var(--bg-color); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.5rem; display: flex; flex-direction: column;">
-                <div style="display: flex; align-items: center; gap: 0.6rem; margin-bottom: 0.6rem;">
-                    <span style="font-size: 1.35rem;">📰</span>
-                    <h3 style="font-size: 1.1rem; color: var(--text-primary); margin: 0;">1. News Analysis &amp; NLP Classifier</h3>
+            <!-- Tier 1 -->
+            <div style="background: var(--bg-color); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.5rem;">
+                <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.75rem;">
+                    <span style="background: #38BDF8; color: #0A0F1D; font-weight: 800; border-radius: 50%; width: 26px; height: 26px; display: inline-flex; align-items: center; justify-content: center; font-size: 0.85rem;">1</span>
+                    <h3 style="font-size: 1.1rem; color: var(--text-primary); margin: 0;">Ingestion &amp; Security</h3>
                 </div>
-                <p style="font-size: 0.88rem; color: var(--text-secondary); line-height: 1.55; flex-grow: 1;">
-                    Ingests text statements, headlines, or articles. Uses scikit-learn TF-IDF n-gram vectorization and an online Passive-Aggressive Classifier to instantly evaluate heuristic linguistic markers of deception.
-                </p>
-                <div style="margin-top: 1rem; font-size: 0.8rem; color: var(--accent); font-weight: 600;">
-                    Sub-millisecond inference (2.4 ms) &bull; Confidence Scoring
-                </div>
-            </div>
-
-            <!-- Module 2 -->
-            <div style="background: var(--bg-color); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.5rem; display: flex; flex-direction: column;">
-                <div style="display: flex; align-items: center; gap: 0.6rem; margin-bottom: 0.6rem;">
-                    <span style="font-size: 1.35rem;">🌐</span>
-                    <h3 style="font-size: 1.1rem; color: var(--text-primary); margin: 0;">2. Live Web Fact-Checker (RAG)</h3>
-                </div>
-                <p style="font-size: 0.88rem; color: var(--text-secondary); line-height: 1.55; flex-grow: 1;">
-                    Extracts entities (spaCy NER) and queries multi-source news indexes (Google News RSS, Inshorts, NewsAPI). Passes raw verified articles as context into Google Gemini 2.5 Flash for consensus reasoning without hallucination.
-                </p>
-                <div style="margin-top: 1rem; font-size: 0.8rem; color: var(--accent); font-weight: 600;">
-                    Multi-source cross-reference &bull; Full citation links
+                <div style="display: flex; flex-direction: column; gap: 0.65rem; font-size: 0.88rem; color: var(--text-secondary);">
+                    <div>
+                        <strong style="color: var(--text-primary);">Executive UI:</strong> Clean, responsive slate/charcoal interface built with HTML5, CSS3 &amp; Jinja2.
+                    </div>
+                    <div>
+                        <strong style="color: var(--text-primary);">Flask WSGI Server:</strong> Python backend managing routing, session cookies, and API controllers.
+                    </div>
+                    <div>
+                        <strong style="color: var(--text-primary);">Security Guards:</strong> <code>@login_required</code> decorators, PBKDF2 password hashing, and 50MB payload limits.
+                    </div>
+                    <div>
+                        <strong style="color: var(--text-primary);">Sanitization:</strong> <code>secure_filename</code> filtering and strict extension whitelisting (PNG, JPG, MP4).
+                    </div>
                 </div>
             </div>
 
-            <!-- Module 3 -->
-            <div style="background: var(--bg-color); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.5rem; display: flex; flex-direction: column;">
-                <div style="display: flex; align-items: center; gap: 0.6rem; margin-bottom: 0.6rem;">
-                    <span style="font-size: 1.35rem;">🧭</span>
-                    <h3 style="font-size: 1.1rem; color: var(--text-primary); margin: 0;">3. Origin Tracer (Ground Zero)</h3>
+            <!-- Tier 2 -->
+            <div style="background: var(--bg-color); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.5rem;">
+                <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.75rem;">
+                    <span style="background: #10B981; color: #0A0F1D; font-weight: 800; border-radius: 50%; width: 26px; height: 26px; display: inline-flex; align-items: center; justify-content: center; font-size: 0.85rem;">2</span>
+                    <h3 style="font-size: 1.1rem; color: var(--text-primary); margin: 0;">Forensic Engines</h3>
                 </div>
-                <p style="font-size: 0.88rem; color: var(--text-secondary); line-height: 1.55; flex-grow: 1;">
-                    Uncovers where a rumor or webpage first appeared online. Queries Internet Archive (Wayback Machine CDX API) for the earliest snapshot timestamp, ICANN RDAP for domain registration age, and logs submitter node geolocation.
-                </p>
-                <div style="margin-top: 1rem; font-size: 0.8rem; color: var(--accent); font-weight: 600;">
-                    Legal public APIs &bull; Burner domain risk scoring &bull; Recurrence
-                </div>
-            </div>
-
-            <!-- Module 4 -->
-            <div style="background: var(--bg-color); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.5rem; display: flex; flex-direction: column;">
-                <div style="display: flex; align-items: center; gap: 0.6rem; margin-bottom: 0.6rem;">
-                    <span style="font-size: 1.35rem;">🖼️</span>
-                    <h3 style="font-size: 1.1rem; color: var(--text-primary); margin: 0;">4. Image &amp; Face Forensics</h3>
-                </div>
-                <p style="font-size: 0.88rem; color: var(--text-secondary); line-height: 1.55; flex-grow: 1;">
-                    Executes MTCNN face landmark detection with a 30% bounding margin. Passes face crops to an EfficientNet-B7 deepfake classifier (DFDC winner architecture) while extracting embedded camera EXIF signatures.
-                </p>
-                <div style="margin-top: 1rem; font-size: 0.8rem; color: var(--accent); font-weight: 600;">
-                    PyTorch tensors &bull; Blending artifact detection &bull; EXIF dumps
+                <div style="display: flex; flex-direction: column; gap: 0.65rem; font-size: 0.88rem; color: var(--text-secondary);">
+                    <div>
+                        <strong style="color: var(--text-primary);">NLP Text Classifier:</strong> TF-IDF (5k features) + Logistic Regression scoring lexical authenticity.
+                    </div>
+                    <div>
+                        <strong style="color: var(--text-primary);">Live RAG Engine:</strong> <code>ThreadPoolExecutor</code> concurrently querying 5 live news APIs (Google News, NewsAPI, Inshorts).
+                    </div>
+                    <div>
+                        <strong style="color: var(--text-primary);">Gemini 2.5 Flash:</strong> Evaluates retrieved web evidence with rigid JSON schema consensus.
+                    </div>
+                    <div>
+                        <strong style="color: var(--text-primary);">Computer Vision:</strong> MTCNN face extraction (30% margin) + EfficientNet-B7 deepfake detection.
+                    </div>
                 </div>
             </div>
 
-            <!-- Module 5 -->
-            <div style="background: var(--bg-color); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.5rem; display: flex; flex-direction: column;">
-                <div style="display: flex; align-items: center; gap: 0.6rem; margin-bottom: 0.6rem;">
-                    <span style="font-size: 1.35rem;">🔒</span>
-                    <h3 style="font-size: 1.1rem; color: var(--text-primary); margin: 0;">5. Cryptographic File Integrity</h3>
+            <!-- Tier 3 -->
+            <div style="background: var(--bg-color); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.5rem;">
+                <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.75rem;">
+                    <span style="background: #8B5CF6; color: #0A0F1D; font-weight: 800; border-radius: 50%; width: 26px; height: 26px; display: inline-flex; align-items: center; justify-content: center; font-size: 0.85rem;">3</span>
+                    <h3 style="font-size: 1.1rem; color: var(--text-primary); margin: 0;">Storage &amp; Audit</h3>
                 </div>
-                <p style="font-size: 0.88rem; color: var(--text-secondary); line-height: 1.55; flex-grow: 1;">
-                    Generates dual-layer hashes: SHA-256 for bit-for-bit tampering detection, and perceptual hash (pHash) based on Discrete Cosine Transform (DCT) for media that underwent compression or format conversion.
-                </p>
-                <div style="margin-top: 1rem; font-size: 0.8rem; color: var(--accent); font-weight: 600;">
-                    Immutable Chain of Custody &bull; SQLite audit history
-                </div>
-            </div>
-
-            <!-- Module 6 -->
-            <div style="background: var(--bg-color); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.5rem; display: flex; flex-direction: column;">
-                <div style="display: flex; align-items: center; gap: 0.6rem; margin-bottom: 0.6rem;">
-                    <span style="font-size: 1.35rem;">🗄️</span>
-                    <h3 style="font-size: 1.1rem; color: var(--text-primary); margin: 0;">6. Verifiable Forensic Case Reports</h3>
-                </div>
-                <p style="font-size: 0.88rem; color: var(--text-secondary); line-height: 1.55; flex-grow: 1;">
-                    Assigns a unique UUID to every analysis case. Logs full technical metadata, confidence ratings, timestamps, and supporting sources into an audit ledger exportable as printable legal defense documents.
-                </p>
-                <div style="margin-top: 1rem; font-size: 0.8rem; color: var(--accent); font-weight: 600;">
-                    Court-admissible audit log &bull; 1-click PDF print export
+                <div style="display: flex; flex-direction: column; gap: 0.65rem; font-size: 0.88rem; color: var(--text-secondary);">
+                    <div>
+                        <strong style="color: var(--text-primary);">SHA-256 Hashing:</strong> Bit-exact cryptographic signature calculation for digital file verification.
+                    </div>
+                    <div>
+                        <strong style="color: var(--text-primary);">Perceptual pHash:</strong> DCT-based visual structure footprint tracking localized manipulation.
+                    </div>
+                    <div>
+                        <strong style="color: var(--text-primary);">EXIF Forensics:</strong> Camera metadata, timestamp, GPS, and software editing signatures.
+                    </div>
+                    <div>
+                        <strong style="color: var(--text-primary);">Chain of Custody:</strong> Immutable SQLite audit logs tagged with UUIDv4, timestamps, and confidence ratings.
+                    </div>
                 </div>
             </div>
 
         </div>
     </section>
 
-    <!-- SECTION 4: TECHNOLOGY STACK -->
-    <section id="technology-stack" class="card" style="margin-bottom: 2.5rem; border-radius: 16px;">
-        <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem;">
-            <span style="font-size: 1.6rem;">💻</span>
+    <!-- ========================================== -->
+    <!-- SLIDE 03: TEXT & NEWS VERIFICATION         -->
+    <!-- ========================================== -->
+    <section id="slide-03" class="card" style="margin-bottom: 2.5rem; border-radius: 16px; scroll-margin-top: 2rem;">
+        <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1.25rem;">
             <div>
-                <span style="font-size: 0.78rem; text-transform: uppercase; font-weight: 700; color: var(--accent); letter-spacing: 0.8px;">Engineering &amp; Architecture</span>
-                <h2 style="font-size: 1.5rem; font-weight: 700; color: var(--text-primary); margin: 0;">4. Technology Stack</h2>
+                <span class="slide-num-badge">SLIDE 03</span>
+                <h2 style="font-size: 1.6rem; font-weight: 700; color: var(--text-primary); margin: 0.35rem 0 0.2rem 0;">
+                    03. TEXT &amp; NEWS VERIFICATION
+                </h2>
+                <div style="font-size: 1.05rem; font-weight: 600; color: var(--accent);">
+                    Multi-Source RAG &amp; Consensus Scoring Engine
+                </div>
             </div>
+            <span style="font-size: 0.85rem; color: var(--text-muted); font-style: italic;">
+                Eliminating LLM hallucinations by coupling real-time retrieval with structured generative AI.
+            </span>
         </div>
-        <p style="color: var(--text-secondary); font-size: 1rem; line-height: 1.7; margin-bottom: 1.5rem;">
-            Built with modern, production-grade tools selected for reliability, speed, and cross-platform flexibility:
-        </p>
 
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem;">
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.5rem;">
             
-            <div style="background: var(--bg-color); border: 1px solid var(--border-color); border-radius: 10px; padding: 1.25rem;">
-                <div style="font-size: 1.25rem; margin-bottom: 0.25rem;">🐍</div>
-                <div style="font-weight: 700; color: var(--text-primary);">Python 3.14</div>
-                <div style="font-size: 0.82rem; color: var(--text-muted); margin-bottom: 0.5rem;">Core Application Runtime</div>
-                <p style="font-size: 0.85rem; color: var(--text-secondary); margin: 0; line-height: 1.5;">Native execution of scientific, NLP, and machine learning pipelines.</p>
+            <!-- Static Baseline -->
+            <div style="background: var(--bg-color); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.5rem;">
+                <h3 style="font-size: 1.15rem; color: var(--text-primary); margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem;">
+                    <span>🧠</span> NLP Classifier (Static Baseline)
+                </h3>
+                <ul style="padding-left: 1.25rem; margin: 0; display: flex; flex-direction: column; gap: 0.85rem; font-size: 0.92rem; color: var(--text-secondary); line-height: 1.55;">
+                    <li>
+                        <strong style="color: var(--text-primary);">Feature Extraction:</strong> Text is sanitized, stripped of stop words, and mapped into sparse TF-IDF n-grams (1, 2) up to 5,000 features.
+                    </li>
+                    <li>
+                        <strong style="color: var(--text-primary);">Logistic Regression:</strong> Computes probabilistic confidence via sigmoid distribution in <strong>~2.4 milliseconds</strong>.
+                    </li>
+                    <li>
+                        <strong style="color: var(--text-primary);">Explainable Scoring:</strong> Provides transparent weights for feature words rather than uninterpretable black-box decisions.
+                    </li>
+                    <li>
+                        <strong style="color: var(--text-primary);">Official Channel Whitelist:</strong> Cross-checks handles against trusted sources (PIB, ISRO, DRDO) to prevent false alerts on official communiques.
+                    </li>
+                </ul>
             </div>
 
-            <div style="background: var(--bg-color); border: 1px solid var(--border-color); border-radius: 10px; padding: 1.25rem;">
-                <div style="font-size: 1.25rem; margin-bottom: 0.25rem;">🌶️</div>
-                <div style="font-weight: 700; color: var(--text-primary);">Flask 3.1</div>
-                <div style="font-size: 0.82rem; color: var(--text-muted); margin-bottom: 0.5rem;">Web &amp; RESTful API Framework</div>
-                <p style="font-size: 0.85rem; color: var(--text-secondary); margin: 0; line-height: 1.5;">Unopinionated, lightweight routing with session-based authentication.</p>
-            </div>
-
-            <div style="background: var(--bg-color); border: 1px solid var(--border-color); border-radius: 10px; padding: 1.25rem;">
-                <div style="font-size: 1.25rem; margin-bottom: 0.25rem;">🔥</div>
-                <div style="font-weight: 700; color: var(--text-primary);">PyTorch &amp; MTCNN</div>
-                <div style="font-size: 0.82rem; color: var(--text-muted); margin-bottom: 0.5rem;">Computer Vision &amp; Deep Learning</div>
-                <p style="font-size: 0.85rem; color: var(--text-secondary); margin: 0; line-height: 1.5;">Facial bounding box localization and EfficientNet deepfake inference.</p>
-            </div>
-
-            <div style="background: var(--bg-color); border: 1px solid var(--border-color); border-radius: 10px; padding: 1.25rem;">
-                <div style="font-size: 1.25rem; margin-bottom: 0.25rem;">📊</div>
-                <div style="font-weight: 700; color: var(--text-primary);">Scikit-Learn</div>
-                <div style="font-size: 0.82rem; color: var(--text-muted); margin-bottom: 0.5rem;">NLP &amp; Machine Learning</div>
-                <p style="font-size: 0.85rem; color: var(--text-secondary); margin: 0; line-height: 1.5;">TF-IDF vectorizer and Passive-Aggressive classification models.</p>
-            </div>
-
-            <div style="background: var(--bg-color); border: 1px solid var(--border-color); border-radius: 10px; padding: 1.25rem;">
-                <div style="font-size: 1.25rem; margin-bottom: 0.25rem;">✨</div>
-                <div style="font-weight: 700; color: var(--text-primary);">Google Gemini 2.5 Flash</div>
-                <div style="font-size: 0.82rem; color: var(--text-muted); margin-bottom: 0.5rem;">Generative AI Reasoning Engine</div>
-                <p style="font-size: 0.85rem; color: var(--text-secondary); margin: 0; line-height: 1.5;">Structured schema consensus synthesis against live web context.</p>
-            </div>
-
-            <div style="background: var(--bg-color); border: 1px solid var(--border-color); border-radius: 10px; padding: 1.25rem;">
-                <div style="font-size: 1.25rem; margin-bottom: 0.25rem;">🗃️</div>
-                <div style="font-weight: 700; color: var(--text-primary);">SQLite 3</div>
-                <div style="font-size: 0.82rem; color: var(--text-muted); margin-bottom: 0.5rem;">Embedded ACID Audit Database</div>
-                <p style="font-size: 0.85rem; color: var(--text-secondary); margin: 0; line-height: 1.5;">Zero-dependency persistent chain of custody and recurrence tracking.</p>
-            </div>
-
-            <div style="background: var(--bg-color); border: 1px solid var(--border-color); border-radius: 10px; padding: 1.25rem;">
-                <div style="font-size: 1.25rem; margin-bottom: 0.25rem;">☁️</div>
-                <div style="font-weight: 700; color: var(--text-primary);">Cloudflare &amp; Vercel</div>
-                <div style="font-size: 0.82rem; color: var(--text-muted); margin-bottom: 0.5rem;">Edge Network &amp; QUIC Tunneling</div>
-                <p style="font-size: 0.85rem; color: var(--text-secondary); margin: 0; line-height: 1.5;">Global HTTPS delivery, edge caching, and encrypted live access.</p>
-            </div>
-
-            <div style="background: var(--bg-color); border: 1px solid var(--border-color); border-radius: 10px; padding: 1.25rem;">
-                <div style="font-size: 1.25rem; margin-bottom: 0.25rem;">🎨</div>
-                <div style="font-weight: 700; color: var(--text-primary);">HTML5, CSS3 &amp; JS</div>
-                <div style="font-size: 0.82rem; color: var(--text-muted); margin-bottom: 0.5rem;">Themeable Frontend Design</div>
-                <p style="font-size: 0.85rem; color: var(--text-secondary); margin: 0; line-height: 1.5;">Zero-flicker Obsidian Dark Mode, responsive CSS grid, and vanilla JS.</p>
+            <!-- Multi-Source RAG -->
+            <div style="background: var(--bg-color); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.5rem;">
+                <h3 style="font-size: 1.15rem; color: var(--accent); margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem;">
+                    <span>🌐</span> Live Web Search (Multi-Source RAG)
+                </h3>
+                <ul style="padding-left: 1.25rem; margin: 0; display: flex; flex-direction: column; gap: 0.85rem; font-size: 0.92rem; color: var(--text-secondary); line-height: 1.55;">
+                    <li>
+                        <strong style="color: var(--text-primary);">spaCy Named Entity Recognition:</strong> Identifies core entities (ORG, GPE, PERSON, EVENT) with automated fallback cleaning.
+                    </li>
+                    <li>
+                        <strong style="color: var(--text-primary);">Concurrent News Ingestion:</strong> <code>ThreadPoolExecutor</code> queries PyGoogleNews, NewsAPI, Inshorts endpoints, and Open-News in parallel.
+                    </li>
+                    <li>
+                        <strong style="color: var(--text-primary);">Recency &amp; Deduplication:</strong> Enforces strict 24-48h recency filters and removes duplicate articles via normalized string similarity.
+                    </li>
+                    <li>
+                        <strong style="color: var(--text-primary);">Gemini 2.5 Flash Synthesis:</strong> Evaluates claims strictly against retrieved articles, returning status, confidence (0-100), and clickable citations.
+                    </li>
+                    <li>
+                        <strong style="color: var(--text-primary);">Breaking News Override:</strong> Corroborated mainstream coverage overrides offline static alerts to eliminate false positives.
+                    </li>
+                </ul>
             </div>
 
         </div>
     </section>
 
-    <!-- SECTION 5: BENCHMARKS -->
-    <section id="benchmarks" class="card" style="margin-bottom: 2.5rem; border-radius: 16px;">
-        <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem;">
-            <span style="font-size: 1.6rem;">⏱️</span>
+    <!-- ========================================== -->
+    <!-- SLIDE 04: COMPUTER VISION FORENSICS        -->
+    <!-- ========================================== -->
+    <section id="slide-04" class="card" style="margin-bottom: 2.5rem; border-radius: 16px; scroll-margin-top: 2rem;">
+        <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1.25rem;">
             <div>
-                <span style="font-size: 0.78rem; text-transform: uppercase; font-weight: 700; color: var(--accent); letter-spacing: 0.8px;">Empirical Performance</span>
-                <h2 style="font-size: 1.5rem; font-weight: 700; color: var(--text-primary); margin: 0;">5. Performance Benchmarks</h2>
+                <span class="slide-num-badge">SLIDE 04</span>
+                <h2 style="font-size: 1.6rem; font-weight: 700; color: var(--text-primary); margin: 0.35rem 0 0.2rem 0;">
+                    04. COMPUTER VISION FORENSICS
+                </h2>
+                <div style="font-size: 1.05rem; font-weight: 600; color: var(--accent);">
+                    Neural Deepfake Detection &amp; Facial Analysis
+                </div>
             </div>
+            <span style="font-size: 0.85rem; color: var(--text-muted); font-style: italic;">
+                Integrating Kaggle DFDC 1st-place winning architecture with MTCNN boundary extraction.
+            </span>
         </div>
-        <p style="color: var(--text-secondary); font-size: 1rem; line-height: 1.7; margin-bottom: 1.5rem;">
-            Quantitative system benchmarks recorded during testing and evaluation:
-        </p>
 
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.25rem;">
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.5rem;">
             
-            <div style="background: var(--bg-color); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.5rem; text-align: center;">
-                <div style="font-size: 2.25rem; font-weight: 800; color: #38BDF8; line-height: 1.2;">
-                    {{ benchmarks.cold_boot if benchmarks else '1.1s' }}
-                </div>
-                <div style="font-weight: 700; color: var(--text-primary); margin-top: 0.5rem; font-size: 0.95rem;">
-                    Serverless Cold Boot
-                </div>
-                <p style="font-size: 0.82rem; color: var(--text-muted); margin: 0.35rem 0 0 0;">
-                    Lazy-loaded heavy dependencies on Vercel Edge.
-                </p>
+            <!-- MTCNN Box -->
+            <div style="background: var(--bg-color); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.5rem;">
+                <h3 style="font-size: 1.15rem; color: var(--text-primary); margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem;">
+                    <span>📐</span> MTCNN Face Extraction (30% Margin)
+                </h3>
+                <ul style="padding-left: 1.25rem; margin: 0; display: flex; flex-direction: column; gap: 0.85rem; font-size: 0.92rem; color: var(--text-secondary); line-height: 1.55;">
+                    <li>
+                        <strong style="color: var(--text-primary);">DFDC Winning Foundation:</strong> Faithfully implements Selim Seferbekov's 1st-place solution from Kaggle's Deepfake Detection Challenge.
+                    </li>
+                    <li>
+                        <strong style="color: var(--text-primary);">Multi-Stage Face Detection:</strong> <code>facenet-pytorch</code> MTCNN detects facial landmarks, selects the largest face, and outputs bounding coordinates.
+                    </li>
+                    <li>
+                        <strong style="color: var(--text-primary);">Why the 30% Margin Expansion?</strong>
+                        <div style="margin-top: 0.35rem; padding: 0.75rem; background: rgba(56, 189, 248, 0.08); border-left: 3px solid #38BDF8; border-radius: 4px; color: var(--text-primary); font-size: 0.88rem;">
+                            Deepfake generators blend synthetic faces into original footage, leaving seam artifacts along jawlines, ears, and hair. Tight bounding boxes crop these seams out! Adding a 30% margin on all 4 sides captures the critical artifact boundaries needed for classification.
+                        </div>
+                    </li>
+                </ul>
             </div>
 
-            <div style="background: var(--bg-color); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.5rem; text-align: center;">
-                <div style="font-size: 2.25rem; font-weight: 800; color: #10B981; line-height: 1.2;">
-                    {{ benchmarks.nlp_latency if benchmarks else '2.4 ms' }}
-                </div>
-                <div style="font-weight: 700; color: var(--text-primary); margin-top: 0.5rem; font-size: 0.95rem;">
-                    NLP Classification Latency
-                </div>
-                <p style="font-size: 0.82rem; color: var(--text-muted); margin: 0.35rem 0 0 0;">
-                    Sub-millisecond TF-IDF vector score calculation.
-                </p>
-            </div>
-
-            <div style="background: var(--bg-color); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.5rem; text-align: center;">
-                <div style="font-size: 2.25rem; font-weight: 800; color: #8B5CF6; line-height: 1.2;">
-                    {{ benchmarks.rag_retrieval if benchmarks else '1.8s - 2.4s' }}
-                </div>
-                <div style="font-weight: 700; color: var(--text-primary); margin-top: 0.5rem; font-size: 0.95rem;">
-                    Live Web RAG Pipeline
-                </div>
-                <p style="font-size: 0.82rem; color: var(--text-muted); margin: 0.35rem 0 0 0;">
-                    Concurrent multi-source extraction + Gemini AI.
-                </p>
-            </div>
-
-            <div style="background: var(--bg-color); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.5rem; text-align: center;">
-                <div style="font-size: 2.25rem; font-weight: 800; color: #F59E0B; line-height: 1.2;">
-                    {{ benchmarks.origin_query if benchmarks else '850ms - 1.2s' }}
-                </div>
-                <div style="font-weight: 700; color: var(--text-primary); margin-top: 0.5rem; font-size: 0.95rem;">
-                    Origin CDX &amp; RDAP Query
-                </div>
-                <p style="font-size: 0.82rem; color: var(--text-muted); margin: 0.35rem 0 0 0;">
-                    Earliest Wayback snapshot &amp; domain age lookup.
-                </p>
-            </div>
-
-            <div style="background: var(--bg-color); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.5rem; text-align: center;">
-                <div style="font-size: 2.25rem; font-weight: 800; color: #EC4899; line-height: 1.2;">
-                    {{ benchmarks.face_crop if benchmarks else '~120 ms' }}
-                </div>
-                <div style="font-weight: 700; color: var(--text-primary); margin-top: 0.5rem; font-size: 0.95rem;">
-                    Face Crop &amp; Tensor Prep
-                </div>
-                <p style="font-size: 0.82rem; color: var(--text-muted); margin: 0.35rem 0 0 0;">
-                    MTCNN facial alignment on commodity CPU.
-                </p>
-            </div>
-
-            <div style="background: var(--bg-color); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.5rem; text-align: center;">
-                <div style="font-size: 2.25rem; font-weight: 800; color: #06B6D4; line-height: 1.2;">
-                    {{ benchmarks.hashing_speed if benchmarks else '< 45 ms' }}
-                </div>
-                <div style="font-weight: 700; color: var(--text-primary); margin-top: 0.5rem; font-size: 0.95rem;">
-                    Dual-Layer Hashing
-                </div>
-                <p style="font-size: 0.82rem; color: var(--text-muted); margin: 0.35rem 0 0 0;">
-                    SHA-256 + pHash generation for 10MB files.
-                </p>
+            <!-- EfficientNet Box -->
+            <div style="background: var(--bg-color); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.5rem;">
+                <h3 style="font-size: 1.15rem; color: var(--text-primary); margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem;">
+                    <span>🖼️</span> EfficientNet-B7 &amp; Video Forensics
+                </h3>
+                <ul style="padding-left: 1.25rem; margin: 0; display: flex; flex-direction: column; gap: 0.85rem; font-size: 0.92rem; color: var(--text-secondary); line-height: 1.55;">
+                    <li>
+                        <strong style="color: var(--text-primary);">EfficientNet-B7 Backbone:</strong> Constructed via <code>timm</code> (<code>tf_efficientnet_b7_ns</code>) pre-trained with ImageNet Noisy Student self-training.
+                    </li>
+                    <li>
+                        <strong style="color: var(--text-primary);">High-Resolution Tensor Input:</strong> Resizes face crops to <strong>380x380</strong> resolution with ImageNet mean/std normalization.
+                    </li>
+                    <li>
+                        <strong style="color: var(--text-primary);">Inference Service API:</strong> <code>deepfake_api.py</code> accepts file paths, PIL images, or byte streams, outputting <code>is_deepfake</code>, <code>confidence_score</code>, and bounding boxes.
+                    </li>
+                    <li>
+                        <strong style="color: var(--text-primary);">Video Temporal Forensics:</strong> Decodes video frames, inspects facial regions sequentially, and tracks perceptual hash drift across frames to uncover splicing.
+                    </li>
+                </ul>
             </div>
 
         </div>
     </section>
 
-    <!-- Bottom Action Card -->
+    <!-- ========================================== -->
+    <!-- SLIDE 05: CRYPTOGRAPHIC FORENSICS          -->
+    <!-- ========================================== -->
+    <section id="slide-05" class="card" style="margin-bottom: 2.5rem; border-radius: 16px; scroll-margin-top: 2rem;">
+        <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1.25rem;">
+            <div>
+                <span class="slide-num-badge">SLIDE 05</span>
+                <h2 style="font-size: 1.6rem; font-weight: 700; color: var(--text-primary); margin: 0.35rem 0 0.2rem 0;">
+                    05. CRYPTOGRAPHIC FORENSICS
+                </h2>
+                <div style="font-size: 1.05rem; font-weight: 600; color: var(--accent);">
+                    Dual-Layer Integrity &amp; Auditable Evidence
+                </div>
+            </div>
+            <span style="font-size: 0.85rem; color: var(--text-muted); font-style: italic;">
+                Combining mathematical bit-exact hashing with perceptual frequency footprints.
+            </span>
+        </div>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.5rem;">
+            
+            <!-- Hashing Column -->
+            <div style="background: var(--bg-color); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.5rem;">
+                <h3 style="font-size: 1.15rem; color: var(--text-primary); margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem;">
+                    <span>🔒</span> Cryptographic vs. Perceptual Hashing
+                </h3>
+                <ul style="padding-left: 1.25rem; margin: 0; display: flex; flex-direction: column; gap: 0.85rem; font-size: 0.92rem; color: var(--text-secondary); line-height: 1.55;">
+                    <li>
+                        <strong style="color: var(--text-primary);">SHA-256 (Bit-Level Identity):</strong> A 256-bit cryptographic digest. The avalanche effect guarantees that modifying a single bit changes the entire hash. Proves files are completely unaltered.
+                    </li>
+                    <li>
+                        <strong style="color: var(--text-primary);">Perceptual Hashing (pHash):</strong> Computes Discrete Cosine Transform (DCT) frequency coefficients representing visual structure. Invariant to benign compression/resizing, but exposes localized tampering.
+                    </li>
+                    <li>
+                        <strong style="color: var(--text-primary);">Complementary Defense:</strong> SHA-256 proves exact file identity; pHash proves whether two differently compressed images depict the exact same scene.
+                    </li>
+                </ul>
+            </div>
+
+            <!-- EXIF Column -->
+            <div style="background: var(--bg-color); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.5rem;">
+                <h3 style="font-size: 1.15rem; color: var(--text-primary); margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem;">
+                    <span>📷</span> EXIF Extraction &amp; Chain of Custody
+                </h3>
+                <ul style="padding-left: 1.25rem; margin: 0; display: flex; flex-direction: column; gap: 0.85rem; font-size: 0.92rem; color: var(--text-secondary); line-height: 1.55;">
+                    <li>
+                        <strong style="color: var(--text-primary);">EXIF Metadata Forensics:</strong> Pillow extracts embedded hardware tags: camera make/model, lens aperture, shutter speed, timestamp, and GPS coordinates.
+                    </li>
+                    <li>
+                        <strong style="color: var(--text-primary);">Tampering Signature Detection:</strong> Detects software editing traces (e.g. Adobe Photoshop, GIMP, or Canva editing fingerprints) within metadata headers.
+                    </li>
+                    <li>
+                        <strong style="color: var(--text-primary);">Immutable Chain of Custody:</strong> Every analysis is registered in SQLite with an immutable UUIDv4, investigator identity, timestamps, hashes, and classification metrics.
+                    </li>
+                    <li>
+                        <strong style="color: var(--text-primary);">Enterprise PDF Export:</strong> Generates auditable, timestamped forensic reports suitable for legal review and organizational compliance.
+                    </li>
+                </ul>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ========================================== -->
+    <!-- SLIDE 06: DEVOPS & INFRASTRUCTURE          -->
+    <!-- ========================================== -->
+    <section id="slide-06" class="card" style="margin-bottom: 2.5rem; border-radius: 16px; scroll-margin-top: 2rem;">
+        <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1.25rem;">
+            <div>
+                <span class="slide-num-badge">SLIDE 06</span>
+                <h2 style="font-size: 1.6rem; font-weight: 700; color: var(--text-primary); margin: 0.35rem 0 0.2rem 0;">
+                    06. DEVOPS &amp; INFRASTRUCTURE
+                </h2>
+                <div style="font-size: 1.05rem; font-weight: 600; color: var(--accent);">
+                    Production Engineering &amp; Cold-Boot Optimization
+                </div>
+            </div>
+            <span style="font-size: 0.85rem; color: var(--text-muted); font-style: italic;">
+                Architectural optimizations enabling serverless deployment and edge delivery.
+            </span>
+        </div>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.5rem;">
+            
+            <!-- Tech Stack Box -->
+            <div style="background: var(--bg-color); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.5rem;">
+                <h3 style="font-size: 1.15rem; color: var(--text-primary); margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem;">
+                    <span>🛠️</span> Production Technology Stack
+                </h3>
+                <ul style="padding-left: 1.25rem; margin: 0; display: flex; flex-direction: column; gap: 0.85rem; font-size: 0.92rem; color: var(--text-secondary); line-height: 1.55;">
+                    <li>
+                        <strong style="color: var(--text-primary);">Backend &amp; Web Framework:</strong> Python 3.11+, Flask WSGI microframework, Jinja2 templating, and <code>ThreadPoolExecutor</code>.
+                    </li>
+                    <li>
+                        <strong style="color: var(--text-primary);">Machine Learning &amp; AI:</strong> PyTorch, timm, <code>facenet-pytorch</code> (MTCNN), Scikit-learn, and Google GenAI SDK (Gemini 2.5 Flash).
+                    </li>
+                    <li>
+                        <strong style="color: var(--text-primary);">Storage &amp; Database:</strong> SQLite3 (WAL mode) with parameterized queries for zero SQL-injection vulnerability.
+                    </li>
+                    <li>
+                        <strong style="color: var(--text-primary);">Frontend Design System:</strong> Custom executive slate/charcoal CSS3 design system with mobile-first viewport scaling and floating card components.
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Serverless & Edge Box -->
+            <div style="background: var(--bg-color); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.5rem;">
+                <h3 style="font-size: 1.15rem; color: var(--accent); margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem;">
+                    <span>⚡</span> Serverless &amp; Edge Optimization
+                </h3>
+                <ul style="padding-left: 1.25rem; margin: 0; display: flex; flex-direction: column; gap: 0.85rem; font-size: 0.92rem; color: var(--text-secondary); line-height: 1.55;">
+                    <li>
+                        <strong style="color: var(--text-primary);">Solving Serverless Cold-Boot:</strong> Heavy libraries (PyTorch, spaCy, timm) exceeded Vercel's 10s limit. We implemented <strong>Lazy Singleton Loading</strong>, dropping cold boot from &gt;7.5s to <strong>1.1s</strong>.
+                    </li>
+                    <li>
+                        <strong style="color: var(--text-primary);">Vercel Edge CDN Pipeline:</strong> Configured <code>@vercel/static</code> builders with <code>check: true</code> rules; stylesheets and assets are served globally via CDN with 0ms serverless delay.
+                    </li>
+                    <li>
+                        <strong style="color: var(--text-primary);">Cloudflare Tunnel Daemon:</strong> Continuous background <code>cloudflared</code> daemon exposes local development securely over HTTPS without port forwarding.
+                    </li>
+                    <li>
+                        <strong style="color: var(--text-primary);">Authentication &amp; Access:</strong> PBKDF2 salted password hashing, HTTP-only SameSite session cookies, and <code>@login_required</code> endpoint protection.
+                    </li>
+                </ul>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ========================================== -->
+    <!-- SLIDE 07: BENCHMARKS & ROADMAP             -->
+    <!-- ========================================== -->
+    <section id="slide-07" class="card" style="margin-bottom: 2.5rem; border-radius: 16px; scroll-margin-top: 2rem;">
+        <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1.25rem;">
+            <div>
+                <span class="slide-num-badge">SLIDE 07</span>
+                <h2 style="font-size: 1.6rem; font-weight: 700; color: var(--text-primary); margin: 0.35rem 0 0.2rem 0;">
+                    07. BENCHMARKS &amp; ROADMAP
+                </h2>
+                <div style="font-size: 1.05rem; font-weight: 600; color: var(--accent);">
+                    System Metrics, Target Impact &amp; Future Vision
+                </div>
+            </div>
+            <span style="font-size: 0.85rem; color: var(--text-muted); font-style: italic;">
+                Empirical benchmarks, stakeholder benefits, and next-generation research roadmap.
+            </span>
+        </div>
+
+        <!-- 4 Key Performance Metrics -->
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem; margin-bottom: 2rem;">
+            <div class="metric-card-box">
+                <div class="metric-val" style="color: #10B981;">2.4 ms</div>
+                <div class="metric-label">NLP Text Inference Latency</div>
+                <p class="metric-desc">Sub-millisecond TF-IDF vector score calculation.</p>
+            </div>
+            <div class="metric-card-box">
+                <div class="metric-val" style="color: #38BDF8;">1.8 - 2.4 s</div>
+                <div class="metric-label">Multi-Source RAG Query</div>
+                <p class="metric-desc">Concurrent multi-threaded live search &amp; Gemini consensus.</p>
+            </div>
+            <div class="metric-card-box">
+                <div class="metric-val" style="color: #8B5CF6;">320 ms</div>
+                <div class="metric-label">GPU Deepfake Detection</div>
+                <p class="metric-desc">MTCNN landmark alignment + EfficientNet inference.</p>
+            </div>
+            <div class="metric-card-box">
+                <div class="metric-val" style="color: #F59E0B;">1.1 s</div>
+                <div class="metric-label">Vercel Cold-Boot Time</div>
+                <p class="metric-desc">Lazy singleton dependency loading on edge serverless.</p>
+            </div>
+        </div>
+
+        <!-- Stakeholders & Roadmap Grid -->
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.5rem;">
+            
+            <!-- Target Stakeholders & Impact -->
+            <div style="background: var(--bg-color); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.5rem;">
+                <h3 style="font-size: 1.15rem; color: var(--text-primary); margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem;">
+                    <span>👥</span> Target Stakeholders &amp; Impact
+                </h3>
+                <ul style="padding-left: 1.25rem; margin: 0; display: flex; flex-direction: column; gap: 0.85rem; font-size: 0.92rem; color: var(--text-secondary); line-height: 1.55;">
+                    <li>
+                        <strong style="color: var(--text-primary);">Cyber Forensic Cells &amp; Police:</strong> Verifiable chain-of-custody reports for evidence intake and legal prosecution.
+                    </li>
+                    <li>
+                        <strong style="color: var(--text-primary);">Journalists &amp; Fact-Checkers:</strong> Rapid cross-checking of breaking viral claims against verified tier-1 news sources.
+                    </li>
+                    <li>
+                        <strong style="color: var(--text-primary);">General Public &amp; Researchers:</strong> Self-service verification of social media rumors, deepfake videos, and forged documents.
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Next-Generation Roadmap -->
+            <div style="background: var(--bg-color); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.5rem;">
+                <h3 style="font-size: 1.15rem; color: var(--accent); margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem;">
+                    <span>🚀</span> Next-Generation Roadmap
+                </h3>
+                <ul style="padding-left: 1.25rem; margin: 0; display: flex; flex-direction: column; gap: 0.85rem; font-size: 0.92rem; color: var(--text-secondary); line-height: 1.55;">
+                    <li>
+                        <strong style="color: var(--text-primary);">Audio Deepfake Detection:</strong> Integrating <code>wav2vec 2.0</code> and Whisper models to detect synthetic voice clones and forged speech.
+                    </li>
+                    <li>
+                        <strong style="color: var(--text-primary);">Browser Extension:</strong> One-click right-click verification extension directly on Twitter/X, WhatsApp Web, and Reddit.
+                    </li>
+                    <li>
+                        <strong style="color: var(--text-primary);">Decentralized Hash Ledger:</strong> Anchoring forensic hash proofs to public blockchain networks (Polygon) for permanent public tamper-evidence.
+                    </li>
+                </ul>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Bottom Action CTA Banner -->
     <div style="background: linear-gradient(135deg, #0F172A 0%, #1E293B 100%); color: #fff; padding: 2.5rem; border-radius: 16px; text-align: center; box-shadow: var(--shadow-md);">
         <h3 style="font-size: 1.6rem; font-weight: 700; margin-bottom: 0.75rem; color: #fff;">
-            Ready to test RumorBuster?
+            Ready to Verify Claims &amp; Multimedia?
         </h3>
         <p style="color: #94A3B8; font-size: 0.95rem; max-width: 600px; margin: 0 auto 1.75rem auto; line-height: 1.6;">
-            Access all modules directly from your dashboard or inspect the complete downloadable documentation.
+            Access all forensic modules directly from your dashboard or download the project presentation deck.
         </p>
         <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
             <a href="{{ url_for('dashboard') }}" class="btn" style="background: #38BDF8; color: #0A0F1D; font-weight: 700;">
-                🚀 Go to Dashboard
+                🚀 Launch Dashboard
             </a>
-            <a href="{{ url_for('origin_trace_ui') }}" class="btn btn-secondary" style="border-color: rgba(255,255,255,0.2); color: #fff; background: rgba(255,255,255,0.06);">
-                🧭 Run Origin Tracer
+            <a href="{{ url_for('presentation_slides_pptx') }}" class="btn btn-secondary" style="border-color: rgba(255,255,255,0.2); color: #fff; background: rgba(255,255,255,0.06);">
+                📊 Download Presentation (.PPTX)
             </a>
             <a href="{{ url_for('complete_project_manual_pdf') }}" target="_blank" class="btn btn-secondary" style="border-color: rgba(255,255,255,0.2); color: #fff; background: rgba(255,255,255,0.06);">
                 📘 View Project Manual (PDF)
@@ -413,4 +600,51 @@
     </div>
 
 </div>
+
+<style>
+.slide-num-badge {
+    display: inline-block;
+    background: rgba(56, 189, 248, 0.15);
+    color: #0284C7;
+    font-size: 0.75rem;
+    font-weight: 800;
+    letter-spacing: 1px;
+    padding: 0.2rem 0.6rem;
+    border-radius: 6px;
+    text-transform: uppercase;
+}
+[data-theme="dark"] .slide-num-badge {
+    background: rgba(56, 189, 248, 0.2);
+    color: #38BDF8;
+}
+.metric-card-box {
+    background: var(--bg-color);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 1.5rem 1.25rem;
+    text-align: center;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.metric-card-box:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+.metric-val {
+    font-size: 2.1rem;
+    font-weight: 800;
+    line-height: 1.2;
+}
+.metric-label {
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-top: 0.5rem;
+    font-size: 0.95rem;
+}
+.metric-desc {
+    font-size: 0.82rem;
+    color: var(--text-muted);
+    margin: 0.35rem 0 0 0;
+    line-height: 1.45;
+}
+</style>
 {% endblock %}
