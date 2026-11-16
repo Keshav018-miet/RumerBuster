@@ -54,25 +54,51 @@
 <div class="report-section">
     <h3>Analysis & Findings</h3>
     
-    <div style="margin-bottom: 1.5rem; padding: 1rem; border-radius: 4px; border: 1px solid var(--border-color); background-color: var(--bg-color);">
-        <h4 style="margin-bottom: 0.5rem;">Primary Result</h4>
-        <div style="display: flex; align-items: center; gap: 1rem;">
-            {% if 'Real' in record.result or 'Match' in record.result %}
-                <span class="badge badge-success" style="font-size: 1.2rem; padding: 0.5rem 1rem;">{{ record.result }}</span>
-            {% elif 'Fake' in record.result or 'Manipulated' in record.result or 'Mismatch' in record.result %}
-                <span class="badge badge-danger" style="font-size: 1.2rem; padding: 0.5rem 1rem;">{{ record.result }}</span>
+    <div style="margin-bottom: 1.5rem; padding: 1.25rem; border-radius: 8px; border: 1px solid var(--border-color); background-color: var(--card-bg, var(--bg-color)); box-shadow: 0 2px 8px rgba(0,0,0,0.04);">
+        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; margin-bottom: 1rem; padding-bottom: 0.75rem; border-bottom: 1px solid var(--border-color);">
+            <h4 style="margin: 0; font-size: 1.15rem; color: var(--text-primary);">Forensic Verdict</h4>
+            
+            <!-- Quick TRUE / FALSE Status Buttons -->
+            <div style="display: inline-flex; align-items: center; gap: 0.5rem; background: var(--bg-color); padding: 4px; border-radius: 30px; border: 1px solid var(--border-color);">
+                {% if 'True' in record.result or 'Real' in record.result or 'Match' in record.result or 'Verified' in record.result %}
+                    <button type="button" class="btn" style="background: #10b981; color: #ffffff; font-weight: 700; padding: 6px 18px; border-radius: 20px; border: none; cursor: default; display: inline-flex; align-items: center; gap: 6px; box-shadow: 0 2px 6px rgba(16, 185, 129, 0.4);">
+                        <span>✔</span> TRUE / VERIFIED
+                    </button>
+                    <button type="button" class="btn" style="background: transparent; color: var(--text-secondary); opacity: 0.4; font-weight: 500; padding: 6px 14px; border-radius: 20px; border: none; cursor: not-allowed;">
+                        FALSE
+                    </button>
+                {% elif 'Fake' in record.result or 'False' in record.result or 'Manipulated' in record.result or 'Mismatch' in record.result %}
+                    <button type="button" class="btn" style="background: transparent; color: var(--text-secondary); opacity: 0.4; font-weight: 500; padding: 6px 14px; border-radius: 20px; border: none; cursor: not-allowed;">
+                        TRUE
+                    </button>
+                    <button type="button" class="btn" style="background: #ef4444; color: #ffffff; font-weight: 700; padding: 6px 18px; border-radius: 20px; border: none; cursor: default; display: inline-flex; align-items: center; gap: 6px; box-shadow: 0 2px 6px rgba(239, 68, 68, 0.4);">
+                        <span>✖</span> FALSE / FAKE
+                    </button>
+                {% else %}
+                    <button type="button" class="btn" style="background: #f59e0b; color: #ffffff; font-weight: 700; padding: 6px 18px; border-radius: 20px; border: none; cursor: default; display: inline-flex; align-items: center; gap: 6px; box-shadow: 0 2px 6px rgba(245, 158, 11, 0.4);">
+                        <span>⚠️</span> UNVERIFIED / INSUFFICIENT DATA
+                    </button>
+                {% endif %}
+            </div>
+        </div>
+
+        <div style="display: flex; align-items: center; gap: 1rem; flex-wrap: wrap;">
+            {% if 'True' in record.result or 'Real' in record.result or 'Match' in record.result or 'Verified' in record.result %}
+                <span class="badge badge-success" style="font-size: 1.1rem; padding: 0.45rem 1rem;">{{ record.result }}</span>
+            {% elif 'Fake' in record.result or 'False' in record.result or 'Manipulated' in record.result or 'Mismatch' in record.result %}
+                <span class="badge badge-danger" style="font-size: 1.1rem; padding: 0.45rem 1rem;">{{ record.result }}</span>
             {% else %}
-                <span class="badge badge-warning" style="font-size: 1.2rem; padding: 0.5rem 1rem;">{{ record.result }}</span>
+                <span class="badge badge-warning" style="font-size: 1.1rem; padding: 0.45rem 1rem;">{{ record.result }}</span>
             {% endif %}
             
             {% if record.confidence %}
-                <span style="font-weight: bold; color: var(--text-secondary);">Confidence: {{ record.confidence|round(2) }}%</span>
+                <span style="font-weight: bold; color: var(--text-secondary); font-size: 1rem;">Confidence Score: {{ record.confidence|round(2) }}%</span>
             {% endif %}
         </div>
         
         {% if record.fact_check_info %}
         <div style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid var(--border-color);">
-            <strong>Fact-Check Info:</strong> <span style="color: var(--warning);">{{ record.fact_check_info }}</span>
+            <strong>Fact-Check Verification:</strong> <span style="color: var(--text-primary);">{{ record.fact_check_info }}</span>
         </div>
         {% endif %}
 
