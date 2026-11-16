@@ -175,7 +175,14 @@ class FakeNewsModel:
                     "confidence": 92.0,
                     "fact_check_info": f"Live reputable news confirms this event. Top match: {rep_hits[0]['title']}",
                     "source_verification": source_verification,
-                    "supporting_sources": [r["url"] for r in rep_hits]
+                    "supporting_sources": [
+                        {
+                            "title": r.get("title") or r.get("source") or f"Source {i+1}",
+                            "source": r.get("source") or "Verified News Outlet",
+                            "url": r.get("url")
+                        }
+                        for i, r in enumerate(rep_hits)
+                    ]
                 }
             else:
                 return {
@@ -183,7 +190,14 @@ class FakeNewsModel:
                     "confidence": 85.0,
                     "fact_check_info": f"Live news articles found matching the claim. Top match: {live_results[0]['title']}",
                     "source_verification": source_verification,
-                    "supporting_sources": [r["url"] for r in live_results]
+                    "supporting_sources": [
+                        {
+                            "title": r.get("title") or r.get("source") or f"Source {i+1}",
+                            "source": r.get("source") or "News Outlet",
+                            "url": r.get("url")
+                        }
+                        for i, r in enumerate(live_results)
+                    ]
                 }
 
         # --- OFFLINE ML FALLBACK & NEUTRAL CHANNEL HANDLING ---
