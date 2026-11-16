@@ -217,18 +217,19 @@ class FakeNewsModel:
         final_prediction = "Potentially Real" if combined_real_prob >= 0.5 else "Potentially Fake"
         final_confidence = round(max(combined_real_prob, 1 - combined_real_prob) * 100, 2)
         
-        # Override for neutral/missing channel if live search found nothing
-        if final_prediction == "Potentially Fake" and source_verification["status"] in ["No Channel Specified", "Unverified / Unknown Channel"]:
-            final_prediction = "Unverified / Needs Further Context"
+        # Override for neutral/missing channel if live search found nothing:
+        # STRICT RULE: Without a verified source or matching live news, claim cannot be validated as Real.
+        if source_verification["badge"] not in ["VERIFIED_OFFICIAL", "TRUSTED_DOMAIN"]:
+            final_prediction = "False / Unverified (No Verified Source Found)"
+            fact_check = "No verified live news or official source found to substantiate this claim."
+        else:
+            fact_check = f"Source verified via {source_verification['channel_name']}."
             
-        fact_check = "No live news matches found. Fact-checking requires further context."
         text_lower = text.lower()
         if "covid" in text_lower or "virus" in text_lower:
             fact_check = "Medical claims should be verified with WHO or CDC guidelines."
         elif "earth is flat" in text_lower:
             fact_check = "The Earth is scientifically proven to be a sphere. See NASA."
-        elif source_verification["badge"] == "VERIFIED_OFFICIAL":
-            fact_check = f"Source verified via {source_verification['channel_name']}. Content is aligned with official publications."
             
         return {
             "prediction": final_prediction,
