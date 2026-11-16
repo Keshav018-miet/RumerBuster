@@ -195,7 +195,7 @@
     </div>
     {% endif %}
 
-    {% if record.metadata and record.metadata|length > 0 %}
+    {% if record.analysis_type != 'News Analysis' and record.metadata and record.metadata|length > 0 %}
     <h4 style="margin-top: 1.5rem; margin-bottom: 0.5rem;">Extracted Metadata (EXIF / Info)</h4>
     <div class="table-container">
         <table>
@@ -215,7 +215,7 @@
             </tbody>
         </table>
     </div>
-    {% else %}
+    {% elif record.analysis_type != 'News Analysis' %}
     <p style="color: var(--text-secondary); margin-top: 1rem;"><em>No metadata/EXIF information available.</em></p>
     {% endif %}
 </div>
